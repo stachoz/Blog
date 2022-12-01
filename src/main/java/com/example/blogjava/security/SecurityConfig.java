@@ -10,5 +10,10 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http.authorizeHttpRequests(requests -> requests.anyRequest().authenticated());
+        http.formLogin(login -> login
+                .loginPage("/login")
+                .permitAll());
+        return http.build();
     }
 }
