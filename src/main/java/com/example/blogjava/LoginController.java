@@ -1,8 +1,6 @@
-package com.example.blogjava.controllers;
+package com.example.blogjava;
 
-import com.example.blogjava.dtos.UserCredentialsDto;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller

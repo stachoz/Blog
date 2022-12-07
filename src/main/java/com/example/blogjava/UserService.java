@@ -1,8 +1,5 @@
-package com.example.blogjava.services;
+package com.example.blogjava;
 
-import com.example.blogjava.dtos.UserCredentialsDto;
-import com.example.blogjava.dtos.UserCredentialsDtoMapper;
-import com.example.blogjava.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;

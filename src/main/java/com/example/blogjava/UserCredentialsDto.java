@@ -1,4 +1,4 @@
-package com.example.blogjava.dtos;
+package com.example.blogjava;
 
 import java.util.Set;
 
@@ -23,4 +23,5 @@ public class UserCredentialsDto {
     public Set<String> getRoles() {
         return roles;
     }
+
 }

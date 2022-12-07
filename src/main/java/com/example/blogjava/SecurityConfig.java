@@ -1,4 +1,4 @@
-package com.example.blogjava.security;
+package com.example.blogjava;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
