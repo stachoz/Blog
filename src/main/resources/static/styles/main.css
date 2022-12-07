@@ -1,13 +1,11 @@
 body {
     margin: 0;
-    background-color: #f7e1d7;
 }
 
 .navbar {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    background-color: #b0c4b1;
     height: 10vh;
     font-size: 1.5rem;
 }
@@ -15,12 +13,5 @@ body {
 .articles {
     width: 60vw;
     height: 80vh;
-    background-color: #dedbd2;
     margin: auto;
-}
-
-.footer {
-    width: 100%;
-    height: 10vh;
-    background-color: #7d8e85;
 }
