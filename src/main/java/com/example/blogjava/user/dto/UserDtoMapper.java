@@ -1,4 +1,6 @@
-package com.example.blogjava;
+package com.example.blogjava.user;
+
+import com.example.blogjava.HomeController;
 
 import java.util.Set;
 import java.util.stream.Collectors;
