@@ -1,4 +1,4 @@
-package com.example.blogjava.user;
+package com.example.blogjava.user.dto;
 
 import java.util.Set;
 

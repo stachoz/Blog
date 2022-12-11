@@ -2,13 +2,13 @@
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title th:text="${userAccountInformation.username}">Profile page</title>
+    <title th:text="${userAccountInformation.username}"></title>
 </head>
 <body>
-    <div class="container" th:object="${userAccountInformation}">
-        <h1 th:text="|*{username} profile page|"></h1>
-        <p th:text="|Username: *{username}|">Email</p>
-        <p th:text="|Email: *{email}|">Email</p>
+    <div th:object="${userAccountInformation}">
+        <h2 th:text="|*{username} page|"></h2>
+        <p th:text="|email: *{email}|"></p>
+        <p th:text="|username: *{username}|"></p>
         <p th:text="*{roles}"></p>
     </div>
 </body>

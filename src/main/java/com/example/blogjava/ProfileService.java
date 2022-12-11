@@ -1,5 +1,7 @@
 package com.example.blogjava;
 
+import com.example.blogjava.user.dto.UserDto;
+import com.example.blogjava.user.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -10,10 +12,5 @@ public class ProfileService {
 
     public ProfileService(UserRepository userRepository){
         this.userRepository = userRepository;
-    }
-
-    public Optional<UserDto> findUserAccountInformation(String username){
-        Optional<UserDto> userDto = userRepository.findByUsername(username).map(UserDtoMapper::map);
-        return userDto;
     }
 }

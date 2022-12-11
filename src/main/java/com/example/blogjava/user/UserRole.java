@@ -1,4 +1,4 @@
-package com.example.blogjava;
+package com.example.blogjava.user;
 
 import jakarta.persistence.*;
 

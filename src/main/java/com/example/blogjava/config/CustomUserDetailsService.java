@@ -1,6 +1,6 @@
-package com.example.blogjava;
+package com.example.blogjava.config;
 
-import com.example.blogjava.user.UserCredentialsDto;
+import com.example.blogjava.user.dto.UserCredentialsDto;
 import com.example.blogjava.user.UserService;
 import jakarta.persistence.*;
 import org.springframework.security.core.userdetails.User;
