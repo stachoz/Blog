@@ -1,6 +1,7 @@
-package com.example.blogjava.user;
+package com.example.blogjava.user.repos;
 
 import com.example.blogjava.HomeController;
+import com.example.blogjava.user.User;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

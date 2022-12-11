@@ -2,9 +2,9 @@ package com.example.blogjava.user;
 
 import com.example.blogjava.user.dto.UserCredentialsDto;
 import com.example.blogjava.user.dto.UserCredentialsDtoMapper;
+import com.example.blogjava.user.repos.UserRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service

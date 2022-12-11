@@ -1,18 +1,18 @@
 package com.example.blogjava;
 
-import com.example.blogjava.user.dto.UserDto;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-
-import java.util.Optional;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
+@RequestMapping("/profile")
 public class ProfileController {
-    private final ProfileService profileService;
-
-    public ProfileController(ProfileService profileService){
-        this.profileService = profileService;
+    @RequestMapping("")
+    String profile(Model model){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        model.addAttribute("username", authentication.getName());
+        return "profile";
     }
 }

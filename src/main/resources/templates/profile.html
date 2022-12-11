@@ -2,14 +2,10 @@
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title th:text="${userAccountInformation.username}"></title>
+    <title></title>
 </head>
 <body>
-    <div th:object="${userAccountInformation}">
-        <h2 th:text="|*{username} page|"></h2>
-        <p th:text="|email: *{email}|"></p>
-        <p th:text="|username: *{username}|"></p>
-        <p th:text="*{roles}"></p>
-    </div>
+    <h1>Profile page</h1>
+    <p th:text="|username: ${username}|">username: John</p>
 </body>
 </html>

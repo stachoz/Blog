@@ -1,4 +1,4 @@
-package com.example.blogjava.user;
+package com.example.blogjava.user.repos;
 
 import com.example.blogjava.config.CustomUserDetailsService;
 import org.springframework.data.repository.CrudRepository;
