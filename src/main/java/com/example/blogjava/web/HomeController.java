@@ -1,6 +1,7 @@
-package com.example.blogjava;
+package com.example.blogjava.web;
 
 import com.example.blogjava.config.CustomUserDetailsService;
+import com.example.blogjava.user.UserRole;
 import jakarta.persistence.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,7 +31,7 @@ public class HomeController {
                 joinColumns = @JoinColumn(name = "user_id"),
                 inverseJoinColumns = @JoinColumn(name = "role_id")
         )
-        private Set<CustomUserDetailsService.UserRole> userRoles = new HashSet<>();
+        private Set<UserRole> userRoles = new HashSet<>();
 
         public Long getId() {
             return id;
@@ -64,11 +65,11 @@ public class HomeController {
             this.password = password;
         }
 
-        public Set<CustomUserDetailsService.UserRole> getUserRoles() {
+        public Set<UserRole> getUserRoles() {
             return userRoles;
         }
 
-        public void setUserRoles(Set<CustomUserDetailsService.UserRole> userRoles) {
+        public void setUserRoles(Set<UserRole> userRoles) {
             this.userRoles = userRoles;
         }
     }

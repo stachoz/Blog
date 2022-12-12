@@ -1,4 +1,4 @@
-package com.example.blogjava;
+package com.example.blogjava.web;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -1,4 +1,4 @@
-package com.example.blogjava;
+package com.example.blogjava.web;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

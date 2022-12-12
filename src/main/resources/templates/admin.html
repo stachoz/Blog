@@ -1,11 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Admin page</title>
 </head>
 <body>
     <h1>Admin page</h1>
-
+    <table>
+        <tr>
+            <th>index</th>
+            <th>username</th>
+            <th>email</th>
+            <th>action</th>
+        </tr>
+        <tr th:each="user, i : ${users}" th:object="${user}">
+            <td th:text="${i.index}"></td>
+            <td th:text="*{username}"></td>
+            <td th:text="*{email}"></td>
+            <td><a>Edit</a><a>Delete</a></td>
+        </tr>
+    </table>
 </body>
 </html>

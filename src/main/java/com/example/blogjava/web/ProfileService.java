@@ -1,4 +1,4 @@
-package com.example.blogjava;
+package com.example.blogjava.web;
 
 import com.example.blogjava.user.repos.UserRepository;
 import org.springframework.stereotype.Service;

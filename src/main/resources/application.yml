@@ -7,6 +7,3 @@ spring:
     hibernate:
       ddl-auto: none
     show-sql: true
-  security:
-    user:
-      password: user
