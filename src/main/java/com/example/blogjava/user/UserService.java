@@ -7,6 +7,7 @@ import com.example.blogjava.user.dto.UserDtoMapper;
 import com.example.blogjava.user.repos.UserRepository;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -34,6 +35,12 @@ public class UserService {
         return userRepository.findAllByUserRoles_RoleName(USER_ROLE).stream()
                 .map(UserDtoMapper::map)
                 .collect(Collectors.toList());
+    }
+
+    public UserDto findUserInformationByName(String username){
+        return userRepository.findByUsername(username)
+                .map(UserDtoMapper::map)
+                .orElseThrow(() -> new UsernameNotFoundException(String.format("User with %s not found", username)));
     }
 
     private boolean isCurrentUserAdmin(){

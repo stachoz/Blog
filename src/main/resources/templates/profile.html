@@ -6,6 +6,10 @@
 </head>
 <body>
     <h1>Profile page</h1>
-    <p th:text="|username: ${username}|">username: John</p>
+    <div th:object="${userDto}">
+        <p th:text="|username: *{username}|"></p>
+        <p th:text="|email: *{email}|"></p>
+    </div>
+
 </body>
 </html>
