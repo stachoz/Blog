@@ -11,6 +11,6 @@ import java.util.Optional;
 public interface UserRepository extends CrudRepository<User, Long>{
     List<User> findAllByUserRoles_RoleName(String userRole);
     Optional<User> findByUsername(String username);
-
+    void deleteByUsername(String username);
 
 }

@@ -16,7 +16,7 @@ public class SecurityConfig {
                 .requestMatchers(h2ConsoleRequestMatcher).permitAll()
                 .requestMatchers("/styles/**").permitAll()
                 .requestMatchers("/").permitAll()
-                .requestMatchers("/admin").hasRole("ADMIN")
+                .requestMatchers("/admin/**").permitAll()
                 .anyRequest().authenticated()
         );
 

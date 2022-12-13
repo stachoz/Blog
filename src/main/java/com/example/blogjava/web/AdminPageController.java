@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -22,5 +23,11 @@ public class AdminPageController {
         List<UserDto> usersInformation = userService.findUsersInformation();
         model.addAttribute("users", usersInformation);
         return "admin";
+    }
+
+    @GetMapping("/delete-user")
+    String deleteUser(@RequestParam String username){
+        userService.deleteUserByUsername(username);
+        return "redirect:/admin";
     }
 }

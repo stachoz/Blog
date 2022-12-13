@@ -9,8 +9,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 public class UserService {
     private final UserRepository userRepository;
     private final String USER_ROLE = "USER";
-    private final String ADMIN_ROLE = "ADMIN";
+    private final String ADMIN_AUTHORITY = "ROLE_ADMIN";
 
     public UserService(UserRepository userRepository){
         this.userRepository = userRepository;
@@ -43,10 +43,17 @@ public class UserService {
                 .orElseThrow(() -> new UsernameNotFoundException(String.format("User with %s not found", username)));
     }
 
+    @Transactional
+    public void deleteUserByUsername(String username){
+        if(isCurrentUserAdmin()){
+            userRepository.deleteByUsername(username);
+        }
+    }
+
     private boolean isCurrentUserAdmin(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return authentication.getAuthorities().stream()
-                .anyMatch(authority -> authority.getAuthority().equals(ADMIN_ROLE));
+                .anyMatch(authority -> authority.getAuthority().equals(ADMIN_AUTHORITY));
     }
 
 }

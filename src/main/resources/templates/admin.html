@@ -17,7 +17,7 @@
             <td th:text="${i.index}"></td>
             <td th:text="*{username}"></td>
             <td th:text="*{email}"></td>
-            <td><a>Edit</a><a>Delete</a></td>
+            <td><a th:href="@{/admin/delete-user(username=*{username})}">Delete</a></td>
         </tr>
     </table>
 </body>

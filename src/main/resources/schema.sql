@@ -20,8 +20,8 @@ CREATE TABLE user_roles
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     user_id BIGINT NOT NUll,
     role_id BIGINT NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES application_user(id),
-    FOREIGN KEY (role_id) REFERENCES user_role(id)
+    FOREIGN KEY (user_id) REFERENCES application_user(id) ON DELETE CASCADE,
+    FOREIGN KEY (role_id) REFERENCES user_role(id) ON DELETE CASCADE
 );
 
 
