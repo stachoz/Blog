@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+<head th:fragment="head">
+    <meta charset="UTF-8">
+    <title>Stachoz Blog</title>
+    <link rel="stylesheet" href="static/styles/main.css" th:href="@{/styles/main.css}">
+</head>
+<body>
+    <header th:fragment="header" class="navbar">
+        <a>Home</a>
+        <a>About</a>
+        <a sec:authorize="!isAuthenticated()" th:href="@{/login}">Login</a>
+        <a sec:authorize="isAuthenticated()" th:href="@{/logout}">Logout</a>
+        <a sec:authorize="isAuthenticated()" th:href="@{/profile}">Profile</a>
+        <a sec:authorize="hasRole('ADMIN')" th:href="@{/admin}">Admin Page</a>
+    </header>
+
+</body>
+</html>
