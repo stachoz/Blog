@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
 <head>
     <meta charset="UTF-8">
     <title>Stachoz Blog</title>
@@ -9,25 +11,10 @@
     <div class="navbar">
         <a>Home</a>
         <a>About</a>
-        <a>Login</a>
-        <a>Logout</a>
-        <a th:href="@{/profile}">Profile</a>
-        <a th:href="@{/admin}">Admin Page</a>
-    </div>
-    <div class="articles">
-        <div class="article">
-            <div>
-
-            </div>
-        </div>
-        <div class="article">
-            <div>
-
-            </div>
-        </div>
-    </div>
-    <div class="footer">
-
+        <a sec:authorize="!isAuthenticated()" th:href="@{/login}">Login</a>
+        <a sec:authorize="isAuthenticated()" th:href="@{/logout}">Logout</a>
+        <a sec:authorize="isAuthenticated()" th:href="@{/profile}">Profile</a>
+        <a sec:authorize="hasRole('ADMIN')" th:href="@{/admin}">Admin Page</a>
     </div>
 </body>
 </html>

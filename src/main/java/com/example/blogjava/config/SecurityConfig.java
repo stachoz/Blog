@@ -16,13 +16,14 @@ public class SecurityConfig {
                 .requestMatchers(h2ConsoleRequestMatcher).permitAll()
                 .requestMatchers("/styles/**").permitAll()
                 .requestMatchers("/").permitAll()
-                .requestMatchers("/admin/**").permitAll()
+                .requestMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
         );
 
         http.formLogin(login -> login
                 .loginPage("/login")
                 .permitAll());
+        http.logout().logoutSuccessUrl("/");
         http.csrf(csrf -> csrf.ignoringRequestMatchers(PathRequest.toH2Console()));
         http.headers().frameOptions().sameOrigin();
         http.csrf().disable();
