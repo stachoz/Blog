@@ -4,6 +4,8 @@ import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -16,6 +18,7 @@ public class SecurityConfig {
                 .requestMatchers(h2ConsoleRequestMatcher).permitAll()
                 .requestMatchers("/styles/**").permitAll()
                 .requestMatchers("/").permitAll()
+                .requestMatchers("/register").permitAll()
                 .requestMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
         );
@@ -29,4 +32,10 @@ public class SecurityConfig {
         http.csrf().disable();
         return http.build();
     }
+
+    @Bean
+    PasswordEncoder passwordEncoder(){
+        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+    }
+
 }
