@@ -3,10 +3,11 @@ package com.example.blogjava.user;
 import com.example.blogjava.user.dto.*;
 import com.example.blogjava.user.repos.UserRepository;
 import com.example.blogjava.user.repos.UserRoleRepository;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -48,6 +50,9 @@ public class UserService {
                 .orElseThrow(() -> new UsernameNotFoundException(String.format("User with %s not found", username)));
     }
 
+    public boolean arePasswordTheSame(String pass1, String pass2){
+        return pass1.equals(pass2);
+    }
     @Transactional
     public void deleteUserByUsername(String username){
         if(isCurrentUserAdmin()){
@@ -57,8 +62,9 @@ public class UserService {
 
     @Transactional
     public void registerUser(UserRegistrationDto dto){
-        if (isUserUnique(dto)){
-            User user = new User();
+        //TODO mapper
+        User user = new User();
+        try{
             user.setEmail(dto.getEmail());
             user.setUsername(dto.getUsername());
             user.setPassword(passwordEncoder.encode(dto.getPassword()));
@@ -70,6 +76,10 @@ public class UserService {
                     }
             );
             userRepository.save(user);
+        } catch (ConstraintViolationException cve){
+            Set<ConstraintViolation<?>> constraintViolations = cve.getConstraintViolations();
+            System.err.println("Constraint violations for object " + user);
+            constraintViolations.forEach(System.err::println);
         }
     }
 
@@ -79,15 +89,5 @@ public class UserService {
                 .anyMatch(authority -> authority.getAuthority().equals(ADMIN_AUTHORITY));
     }
 
-    private boolean isUserUnique(UserRegistrationDto userRegistrationDto){
-        String email = userRegistrationDto.getEmail();
-        String username = userRegistrationDto.getUsername();
-        Optional<User> byEmail = userRepository.findByEmail(email);
-        Optional<User> byUsername = userRepository.findByUsername(username);
-        if (byEmail.isPresent() && byUsername.isPresent()){
-            return false;
-        }
-        return true;
-    }
 
 }

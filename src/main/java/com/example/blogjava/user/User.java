@@ -1,6 +1,9 @@
 package com.example.blogjava.user;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -11,8 +14,15 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotNull
+    @Size(min = 3, max = 50)
     private String username;
+    @NotNull
+    @Size(min = 5, max = 80)
+    @Email
     private String email;
+    @NotNull
+    @Size(min = 4, max = 200)
     private String password;
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
