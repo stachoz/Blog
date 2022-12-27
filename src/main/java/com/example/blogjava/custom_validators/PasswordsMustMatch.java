@@ -8,7 +8,7 @@ import java.lang.annotation.*;
 @Documented
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = PasswordsMatch.class)
+@Constraint(validatedBy = PasswordsMustMatchValidator.class)
 public @interface PasswordsMustMatch {
     String message() default "Passwords are not equal";
     Class<?>[] groups() default {};

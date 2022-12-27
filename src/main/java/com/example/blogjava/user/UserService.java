@@ -50,9 +50,6 @@ public class UserService {
                 .orElseThrow(() -> new UsernameNotFoundException(String.format("User with %s not found", username)));
     }
 
-    public boolean arePasswordTheSame(String pass1, String pass2){
-        return pass1.equals(pass2);
-    }
     @Transactional
     public void deleteUserByUsername(String username){
         if(isCurrentUserAdmin()){
@@ -81,6 +78,16 @@ public class UserService {
             System.err.println("Constraint violations for object " + user);
             constraintViolations.forEach(System.err::println);
         }
+    }
+
+    @Transactional
+    public boolean isEmailUnique(String email){
+        return !userRepository.existsUserByEmail(email);
+    }
+
+    @Transactional
+    public boolean isUsernameUnique(String username){
+        return !userRepository.existsUserByUsername(username);
     }
 
     private boolean isCurrentUserAdmin(){

@@ -29,13 +29,22 @@ public class RegistrationController {
     }
 
     @PostMapping("/register")
-    String register(@Valid @ModelAttribute("user") UserRegistrationDto userRegistrationDto, BindingResult bindingResult){
+    String register(@Valid @ModelAttribute("user") UserRegistrationDto userRegistrationDto, BindingResult bindingResult, Model model){
         if (bindingResult.hasErrors()){
             return "register-form";
-        } else {
-            userService.registerUser(userRegistrationDto);
-            return "redirect:/successful";
         }
+
+        if (!userService.isEmailUnique(userRegistrationDto.getEmail())){
+            bindingResult.rejectValue("email", "", "User with given email address already exists");
+            return "register-form";
+        }
+
+        if (!userService.isUsernameUnique(userRegistrationDto.getUsername())){
+            bindingResult.rejectValue("username", "", "username is already taken");
+        }
+
+        userService.registerUser(userRegistrationDto);
+        return "redirect:/successful";
     }
 
     @GetMapping("/successful")
