@@ -29,7 +29,7 @@ public class RegistrationController {
     }
 
     @PostMapping("/register")
-    String register(@Valid @ModelAttribute("user") UserRegistrationDto userRegistrationDto, BindingResult bindingResult, Model model){
+    String register(@Valid @ModelAttribute("user") UserRegistrationDto userRegistrationDto, BindingResult bindingResult){
         if (bindingResult.hasErrors()){
             return "register-form";
         }
@@ -41,6 +41,7 @@ public class RegistrationController {
 
         if (!userService.isUsernameUnique(userRegistrationDto.getUsername())){
             bindingResult.rejectValue("username", "", "username is already taken");
+            return "register-form";
         }
 
         userService.registerUser(userRegistrationDto);

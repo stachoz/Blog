@@ -5,9 +5,9 @@
 <body>
     <header th:replace="fragments :: header"></header>
     <h1>Profile page</h1>
-    <div th:object="${userDto}">
-        <p th:text="|username: *{username}|"></p>
-        <p th:text="|email: *{email}|"></p>
+    <div th:object="${user}">
+        <p th:text="|username: *{username}|">username: john</p>
+        <p th:text="|email: *{email}|">email: john@example.com</p>
     </div>
 
 </body>

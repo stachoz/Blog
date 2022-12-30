@@ -2,13 +2,11 @@ package com.example.blogjava.web;
 
 import com.example.blogjava.user.UserService;
 import com.example.blogjava.user.dto.UserDto;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/profile")
@@ -20,11 +18,10 @@ public class ProfileController {
     }
 
     @GetMapping("")
-    String profile(Model model){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
+    String profile(@RequestParam String username, Model model){
         UserDto userDto = userService.findUserInformationByName(username);
-        model.addAttribute("userDto", userDto);
+        model.addAttribute("user", userDto);
         return "profile";
     }
+
 }

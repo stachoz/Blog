@@ -1,5 +1,6 @@
 package com.example.blogjava.user;
 
+import com.example.blogjava.post.Post;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
@@ -31,6 +32,8 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private Set<UserRole> userRoles = new HashSet<>();
+    @OneToMany(mappedBy = "user")
+    private Set<Post> posts = new HashSet<>();
 
     public Long getId() {
         return id;

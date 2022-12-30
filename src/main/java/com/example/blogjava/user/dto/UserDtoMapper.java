@@ -8,8 +8,9 @@ import java.util.stream.Collectors;
 
 public class UserDtoMapper {
     public static UserDto map(User user){
-        String username = user.getUsername();
-        String email = user.getEmail();
-        return new UserDto(username,email);
+        UserDto userDto = new UserDto();
+        userDto.setEmail(user.getEmail());
+        userDto.setUsername(user.getUsername());
+        return userDto;
     }
 }

@@ -1,5 +1,6 @@
 DROP TABLE if EXISTS application_user;
 DROP TABLE if EXISTS user_role;
+DROP TABLE if EXISTS post;
 
 CREATE TABLE application_user
 (
@@ -8,7 +9,6 @@ CREATE TABLE application_user
     email VARCHAR(80) NOT NULL ,
     password VARCHAR(200) NOT NULL
 );
-
 CREATE TABLE user_role
 (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
@@ -24,5 +24,14 @@ CREATE TABLE user_roles
     FOREIGN KEY (role_id) REFERENCES user_role(id) ON DELETE CASCADE
 );
 
+CREATE TABLE post
+(
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR,
+    content VARCHAR(500) NOT NULL,
+    time_added TIMESTAMP,
+    author_id BIGINT NOT NULL,
+    FOREIGN KEY (author_id) REFERENCES application_user(id)
+);
 
 

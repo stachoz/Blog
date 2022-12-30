@@ -1,10 +1,12 @@
 package com.example.blogjava.user;
 
 import com.example.blogjava.user.dto.*;
+import com.example.blogjava.user.exception.UserNotFoundException;
 import com.example.blogjava.user.repos.UserRepository;
 import com.example.blogjava.user.repos.UserRoleRepository;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -78,6 +80,16 @@ public class UserService {
             System.err.println("Constraint violations for object " + user);
             constraintViolations.forEach(System.err::println);
         }
+    }
+
+    @Transactional
+    public void editUser(UserDto userDto){
+        String username = userDto.getUsername();
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(UserNotFoundException::new);
+        user.setUsername(userDto.getUsername());
+        user.setEmail(userDto.getEmail());
+        userRepository.save(user);
     }
 
     @Transactional
