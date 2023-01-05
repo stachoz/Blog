@@ -12,4 +12,35 @@ input {
     align-items: center;
     height: 10vh;
     font-size: 1.5rem;
+    padding-bottom: 5vh;
+}
+
+.content {
+    width: 50%;
+    margin: auto;
+}
+
+.add-post-form {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    margin: auto;
+}
+
+#title-input {
+    height: 20px;
+    resize: none;
+}
+
+#content-input {
+    height: 300px;
+    resize: none;
+}
+
+.post-info {
+    display: flex;
+}
+
+.post-info a {
+    padding-right: 10px;
 }

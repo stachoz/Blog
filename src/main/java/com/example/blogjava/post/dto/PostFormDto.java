@@ -1,12 +1,11 @@
 package com.example.blogjava.post.dto;
 
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public class PostFormDto {
     private String title;
-    @Size(max = 500)
+    @Size(max = 2000)
     @NotEmpty(message = "content of post cannot be empty")
     private String content;
 

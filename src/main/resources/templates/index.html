@@ -6,6 +6,22 @@
 </head>
 <body>
     <header th:replace="fragments :: header"></header>
-    <a sec:authorize="isAuthenticated()" th:href="@{/post/add}">Add post</a>
+    <section class="content">
+        <h4>
+            <a sec:authorize="isAuthenticated()" th:href="@{/post/add}">Add post</a>
+        </h4>
+        <div th:each="post : ${posts}">
+            <div class="post-info">
+                <a th:href="@{/profile(username=${post.author})}">
+                    <p th:text="${post.author}"></p>
+                </a>
+                <p th:text="${#dates.format(post.timeAdded, 'dd-MM-yyyy HH:mm')}"></p>
+            </div>
+            <p th:text="${post.title}"></p>
+            <p th:text="${post.content}"></p>
+            <hr>
+        </div>
+        <a th:href="@{}">next page</a>
+    </section>
 </body>
 </html>

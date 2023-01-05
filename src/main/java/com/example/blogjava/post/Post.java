@@ -13,14 +13,16 @@ public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Size(max = 100)
     private String title;
-    @Size(max = 500)
+    @Size(max = 2000)
     @NotEmpty
     private String content;
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     private Date timeAdded;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "author_id")
     private User user;
 

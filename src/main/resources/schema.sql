@@ -28,7 +28,7 @@ CREATE TABLE post
 (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR,
-    content VARCHAR(500) NOT NULL,
+    content VARCHAR(2000) NOT NULL,
     time_added TIMESTAMP,
     author_id BIGINT NOT NULL,
     FOREIGN KEY (author_id) REFERENCES application_user(id)

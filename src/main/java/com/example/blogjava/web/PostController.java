@@ -1,6 +1,8 @@
 package com.example.blogjava.web;
 
+import com.example.blogjava.post.Post;
 import com.example.blogjava.post.PostService;
+import com.example.blogjava.post.dto.PostDto;
 import com.example.blogjava.post.dto.PostFormDto;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -11,6 +13,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/post")
 public class PostController {
@@ -18,6 +22,7 @@ public class PostController {
     public PostController(PostService postService){
         this.postService = postService;
     }
+
     @GetMapping("/add")
     String addPostForm(Model model){
          model.addAttribute("post", new PostFormDto());

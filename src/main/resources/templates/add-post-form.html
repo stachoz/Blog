@@ -6,11 +6,13 @@
 </head>
 <body>
     <header th:replace="fragments :: header"></header>
-    <form method="post" action="/post/save" th:object="${post}">
-        <input th:field="*{title}" type="text" placeholder="title">
-        <input th:field="*{content}" type="text" placeholder="write...">
-        <p th:errors="*{content}"></p>
-        <button type="submit">Add post</button>
-    </form>
+    <section class="content">
+        <form method="post" action="/post/save" th:object="${post}" class="add-post-form">
+            <textarea th:field="*{title}" placeholder="title" id="title-input" maxlength="100"></textarea>
+            <textarea th:field="*{content}" placeholder="write..." id="content-input"></textarea>
+            <p th:errors="*{content}"></p>
+            <button type="submit">Add post</button>
+        </form>
+    </section>
 </body>
 </html>
