@@ -21,7 +21,10 @@
             <p th:text="${post.content}"></p>
             <hr>
         </div>
-        <a th:href="@{}">next page</a>
+        <div class="page-navigation">
+            <a th:if="${current_page > 0}" th:href="@{/previous_page}">Previous Page</a>
+            <a th:unless="${isLast}" th:href="@{/next_page}">Next Page</a>
+        </div>
     </section>
 </body>
 </html>

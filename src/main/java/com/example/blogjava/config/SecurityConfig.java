@@ -21,6 +21,7 @@ public class SecurityConfig {
                 .requestMatchers("/register/**").permitAll()
                 .requestMatchers("/successful").permitAll()
                 .requestMatchers("/admin/**").hasRole("ADMIN")
+                .requestMatchers("/next_page", "/previous_page").permitAll()
                 .anyRequest().authenticated()
         );
 

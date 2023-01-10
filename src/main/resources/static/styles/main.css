@@ -44,3 +44,8 @@ input {
 .post-info a {
     padding-right: 10px;
 }
+
+.page-navigation{
+    display: flex;
+    justify-content: space-between;
+}

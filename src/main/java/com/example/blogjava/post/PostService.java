@@ -15,6 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 @Service
@@ -30,7 +32,7 @@ public class PostService {
 
     @Transactional
     public Page<PostDto> getPageOfPosts(PageRequest pr){
-        Page<Post> all = postRepository.findAll(pr);
+        Page<Post> all = postRepository.findAllByOrderByIdDesc(pr);
         Page<PostDto> map = all.map(PostDtoMapper::map);
         return map;
     }
@@ -43,4 +45,6 @@ public class PostService {
         post.setUser(user);
         postRepository.save(post);
     }
+
+
 }
