@@ -17,8 +17,9 @@
                 </a>
                 <p th:text="${#dates.format(post.timeAdded, 'dd-MM-yyyy HH:mm')}"></p>
             </div>
-            <p th:text="${post.title}"></p>
+            <a th:text="${post.title}"></a>
             <p th:text="${post.content}"></p>
+            <a th:href="@{/post/{id}(id = ${post.id})}">View details</a>
             <hr>
         </div>
         <div class="page-navigation">

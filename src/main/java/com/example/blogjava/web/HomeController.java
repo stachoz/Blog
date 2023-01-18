@@ -41,4 +41,5 @@ public class HomeController {
         if (currentPage > 0) currentPage--;
         return "redirect:/";
     }
+
 }

@@ -13,11 +13,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 @Service
 public class PostService {
@@ -45,6 +42,14 @@ public class PostService {
         post.setUser(user);
         postRepository.save(post);
     }
+
+    @Transactional
+    public PostDto getPostById(Long id) {
+        Optional<Post> post = postRepository.findById(id);
+        return post.map(PostDtoMapper::map)
+                .orElseThrow(NoSuchElementException::new);
+    }
+
 
 
 }

@@ -16,6 +16,7 @@ public class Post {
 
     @Size(max = 100)
     private String title;
+
     @Size(max = 2000)
     @NotEmpty
     private String content;
