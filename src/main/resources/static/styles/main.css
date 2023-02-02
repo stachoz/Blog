@@ -49,3 +49,15 @@ input {
     display: flex;
     justify-content: space-between;
 }
+
+.comment-details {
+    display: flex;
+}
+
+.comment-details p {
+    padding-right: 2%;
+}
+
+#comment-content {
+    marign: 0;
+}

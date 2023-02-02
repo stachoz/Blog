@@ -1,57 +1,44 @@
-package com.example.blogjava.post;
+package com.example.blogjava.comment;
 
-import com.example.blogjava.comment.Comment;
+import com.example.blogjava.post.Post;
 import com.example.blogjava.user.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import org.hibernate.annotations.CreationTimestamp;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 @Entity
-public class Post {
+public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Size(max = 100)
-    private String title;
-
-    @Size(max = 2000)
+    @Size(max = 500)
     @NotEmpty
     private String content;
+
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     private Date timeAdded;
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "author_id")
     private User user;
 
-    @OneToMany()
-    @JoinColumn(name = "comment_id")
-    private List<Comment> comments = new ArrayList<>();
+    @ManyToOne()
+    private Post post;
 
-    public Date getTimeAdded() {
-        return timeAdded;
+    public Post getPost() {
+        return post;
+    }
+
+    public void setPost(Post post) {
+        this.post = post;
     }
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     public String getContent() {
@@ -60,6 +47,10 @@ public class Post {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public Date getTimeAdded() {
+        return timeAdded;
     }
 
     public User getUser() {

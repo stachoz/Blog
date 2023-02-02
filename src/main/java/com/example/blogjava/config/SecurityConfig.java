@@ -20,8 +20,8 @@ public class SecurityConfig {
                 .requestMatchers("/").permitAll()
                 .requestMatchers("/register/**").permitAll()
                 .requestMatchers("/successful").permitAll()
-                .requestMatchers("/admin/**").hasRole("ADMIN")
                 .requestMatchers("/post/**").permitAll()
+                .requestMatchers("/admin/**").hasRole("ADMIN")
                 .requestMatchers("/next_page", "/previous_page").permitAll()
                 .anyRequest().authenticated()
         );
