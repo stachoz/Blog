@@ -34,16 +34,4 @@ CREATE TABLE post
     FOREIGN KEY (author_id) REFERENCES application_user(id)
 );
 
-CREATE TABLE comment
-(
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    content VARCHAR(500) NOT NULL,
-    time_added TIMESTAMP,
-    author_id BIGINT NOT NULL,
-    post_id BIGINT NOT NULL,
-    FOREIGN KEY (author_id) REFERENCES application_user(id),
-    FOREIGN KEY (post_id) REFERENCES post(id)
-);
-
-
 

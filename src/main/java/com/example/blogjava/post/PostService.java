@@ -1,11 +1,5 @@
 package com.example.blogjava.post;
 
-import com.example.blogjava.comment.Comment;
-import com.example.blogjava.comment.CommentRepository;
-import com.example.blogjava.comment.dto.CommentDto;
-import com.example.blogjava.comment.dto.CommentDtoMapper;
-import com.example.blogjava.comment.dto.CommentFormDto;
-import com.example.blogjava.comment.dto.CommentFormDtoMapper;
 import com.example.blogjava.post.dto.PostDto;
 import com.example.blogjava.post.dto.PostDtoMapper;
 import com.example.blogjava.post.dto.PostFormDto;
@@ -19,7 +13,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -27,13 +20,11 @@ import java.util.Optional;
 public class PostService {
     private final PostRepository postRepository;
     private final UserRepository userRepository;
-    private final CommentRepository commentRepository;
 
     public PostService(PostRepository postRepository,
-                       UserRepository userRepository, CommentRepository commentRepository){
+                       UserRepository userRepository){
         this.postRepository = postRepository;
         this.userRepository = userRepository;
-        this.commentRepository = commentRepository;
     }
 
     @Transactional
@@ -58,25 +49,6 @@ public class PostService {
         return post.map(PostDtoMapper::map)
                 .orElseThrow(NoSuchElementException::new);
     }
-
-    @Transactional
-    public void saveComment(CommentFormDto dto, Long postId){
-        Comment comment = CommentFormDtoMapper.map(dto);
-        String name = SecurityContextHolder.getContext().getAuthentication().getName();
-        User user = userRepository.save(userRepository.findByUsername(name).orElseThrow(UserNotFoundException::new));
-        comment.setUser(user);
-        Post post = postRepository.findById(postId).orElseThrow(NoSuchElementException::new);
-        comment.setPost(post);
-        commentRepository.save(comment);
-    }
-    @Transactional
-    public List<CommentDto> getAllComments(Long postId){
-        return commentRepository.findAllByPost_IdOrderByIdDesc(postId).stream()
-                .map(CommentDtoMapper::map).toList();
-    }
-
-
-
 
 
 

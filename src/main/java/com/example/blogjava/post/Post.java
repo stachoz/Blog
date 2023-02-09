@@ -1,15 +1,12 @@
 package com.example.blogjava.post;
 
-import com.example.blogjava.comment.Comment;
 import com.example.blogjava.user.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import org.hibernate.annotations.CreationTimestamp;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 public class Post {
@@ -29,10 +26,6 @@ public class Post {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "author_id")
     private User user;
-
-    @OneToMany()
-    @JoinColumn(name = "comment_id")
-    private List<Comment> comments = new ArrayList<>();
 
     public Date getTimeAdded() {
         return timeAdded;
