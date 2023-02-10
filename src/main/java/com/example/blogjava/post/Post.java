@@ -1,12 +1,13 @@
 package com.example.blogjava.post;
 
+import com.example.blogjava.post.post_comment.Comment;
 import com.example.blogjava.user.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import org.hibernate.annotations.CreationTimestamp;
 
-import java.util.Date;
+import java.util.*;
 
 @Entity
 public class Post {
@@ -26,6 +27,25 @@ public class Post {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "author_id")
     private User user;
+
+    @OneToMany
+    @JoinColumn(
+            name = "post_id",
+            referencedColumnName = "id"
+    )
+    private List<Comment> comments = new ArrayList<>();
+
+    public void setTimeAdded(Date timeAdded) {
+        this.timeAdded = timeAdded;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
 
     public Date getTimeAdded() {
         return timeAdded;

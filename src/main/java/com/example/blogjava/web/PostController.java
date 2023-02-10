@@ -4,6 +4,8 @@ import com.example.blogjava.post.Post;
 import com.example.blogjava.post.PostService;
 import com.example.blogjava.post.dto.PostDto;
 import com.example.blogjava.post.dto.PostFormDto;
+import com.example.blogjava.post.post_comment.CommentDto;
+import com.example.blogjava.post.post_comment.CommentFormDto;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,10 +36,23 @@ public class PostController {
         return "redirect:/";
     }
 
-    @GetMapping("/{id}")
-    String postPage(@PathVariable Long id, Model model){
-        PostDto postById = postService.getPostById(id);
+    @GetMapping("/{postId}")
+    String postPage(@PathVariable Long postId, Model model){
+        PostDto postById = postService.getPostById(postId);
+        List<CommentDto> postComments = postService.getPostComments(postId);
         model.addAttribute("post", postById);
+        model.addAttribute("commentForm", new CommentFormDto());
+        model.addAttribute("comments", postComments);
         return "post";
+    }
+
+    @PostMapping("/{postId}/saveComment")
+    String saveComment(@Valid @ModelAttribute CommentFormDto commentFormDto, BindingResult bindingResult,
+                       @PathVariable Long postId){
+        if (bindingResult.hasErrors()) {
+            return "post";
+        }
+        postService.saveComment(commentFormDto, postId);
+        return "redirect:/post/" + postId;
     }
 }

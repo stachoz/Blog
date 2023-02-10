@@ -1,6 +1,7 @@
 package com.example.blogjava.user;
 
 import com.example.blogjava.post.Post;
+import com.example.blogjava.post.post_comment.Comment;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
@@ -34,6 +35,25 @@ public class User {
     private Set<UserRole> userRoles = new HashSet<>();
     @OneToMany(mappedBy = "user")
     private Set<Post> posts = new HashSet<>();
+
+    @OneToMany(mappedBy = "user")
+    private Set<Comment> comments = new HashSet<>();
+
+    public Set<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(Set<Post> posts) {
+        this.posts = posts;
+    }
+
+    public Set<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(Set<Comment> comments) {
+        this.comments = comments;
+    }
 
     public Long getId() {
         return id;
