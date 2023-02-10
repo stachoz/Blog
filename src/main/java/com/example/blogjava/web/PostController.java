@@ -1,6 +1,5 @@
 package com.example.blogjava.web;
 
-import com.example.blogjava.post.Post;
 import com.example.blogjava.post.PostService;
 import com.example.blogjava.post.dto.PostDto;
 import com.example.blogjava.post.dto.PostFormDto;
@@ -54,5 +53,11 @@ public class PostController {
         }
         postService.saveComment(commentFormDto, postId);
         return "redirect:/post/" + postId;
+    }
+
+    @GetMapping("/{postId}/delete")
+    String deletePost(@PathVariable Long postId){
+        postService.deletePost(postId);
+        return "redirect:/";
     }
 }

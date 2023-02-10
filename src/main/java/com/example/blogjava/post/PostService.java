@@ -10,6 +10,7 @@ import com.example.blogjava.user.exception.UserNotFoundException;
 import com.example.blogjava.user.repos.UserRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,8 +37,7 @@ public class PostService {
     @Transactional
     public Page<PostDto> getPageOfPosts(PageRequest pr){
         Page<Post> all = postRepository.findAllByOrderByIdDesc(pr);
-        Page<PostDto> map = all.map(PostDtoMapper::map);
-        return map;
+        return all.map(PostDtoMapper::map);
     }
 
     @Transactional
@@ -81,5 +81,18 @@ public class PostService {
         return commentRepository.findAllByPost_IdOrderByIdDesc(postId).stream()
                 .map(CommentDtoMapper::map)
                 .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public void deletePost(Long postId){
+        if(isCurrentUserAdmin()){
+            postRepository.deleteById(postId);
+        }
+    }
+
+    private boolean isCurrentUserAdmin(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return authentication.getAuthorities().stream()
+                .anyMatch(authority -> authority.getAuthority().equals("ROLE_ADMIN"));
     }
 }
