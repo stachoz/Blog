@@ -15,21 +15,16 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         PathRequest.H2ConsoleRequestMatcher h2ConsoleRequestMatcher = PathRequest.toH2Console();
         http.authorizeHttpRequests(requests -> requests
-                .requestMatchers(h2ConsoleRequestMatcher).permitAll()
-                .requestMatchers("/styles/**").permitAll()
-                .requestMatchers("/").permitAll()
-                .requestMatchers("/register/**").permitAll()
-                .requestMatchers("/successful").permitAll()
                 .requestMatchers("/admin/**").hasRole("ADMIN")
-                .requestMatchers("/post/**").permitAll()
-                .requestMatchers("/next_page", "/previous_page").permitAll()
-                .anyRequest().authenticated()
+                .requestMatchers("/profile/**").authenticated()
+                .anyRequest().permitAll()
         );
 
         http.formLogin(login -> login
                 .loginPage("/login")
                 .permitAll());
         http.logout().logoutSuccessUrl("/");
+        http.formLogin().defaultSuccessUrl("/");
         http.csrf(csrf -> csrf.ignoringRequestMatchers(PathRequest.toH2Console()));
         http.headers().frameOptions().sameOrigin();
         http.csrf().disable();

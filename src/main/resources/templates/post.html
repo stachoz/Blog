@@ -18,6 +18,7 @@
                 </div>
                 <a th:text="${post.title}"></a>
                 <p th:text="${post.content}"></p>
+                <a sec:authorize="isAuthenticated()" th:href="@{{postId}/report(postId = ${post.id})}">Report</a>
                 <hr>
             </div>
             <div sec:authorize="isAuthenticated()">

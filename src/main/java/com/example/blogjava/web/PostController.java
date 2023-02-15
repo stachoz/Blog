@@ -5,6 +5,7 @@ import com.example.blogjava.post.dto.PostDto;
 import com.example.blogjava.post.dto.PostFormDto;
 import com.example.blogjava.post.post_comment.CommentDto;
 import com.example.blogjava.post.post_comment.CommentFormDto;
+import com.example.blogjava.post.report.ReportFormDto;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -59,5 +60,24 @@ public class PostController {
     String deletePost(@PathVariable Long postId){
         postService.deletePost(postId);
         return "redirect:/";
+    }
+
+    @GetMapping("/{postId}/report")
+    String reportPost(@PathVariable Long postId, Model model){
+        model.addAttribute("reportForm", new ReportFormDto());
+        model.addAttribute("reportedPostId", postId);
+        return "post-report";
+    }
+
+    @PostMapping("{postId}/saveReport")
+    String saveReport(@ModelAttribute ReportFormDto reportFormDto, @PathVariable Long postId){
+        postService.saveReport(reportFormDto, postId);
+        return "redirect:report-confirmation";
+    }
+
+    @GetMapping("/{postId}/report-confirmation")
+    String reportConfirmation(@PathVariable String postId, Model model){
+        model.addAttribute("postId", postId);
+        return "post/report-confirmation";
     }
 }

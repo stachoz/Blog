@@ -2,6 +2,8 @@ DROP TABLE if EXISTS application_user;
 DROP TABLE if EXISTS user_role;
 DROP TABLE if EXISTS post;
 DROP TABLE IF EXISTS comment;
+DROP TABLE IF EXISTS report;
+
 
 CREATE TABLE application_user
 (
@@ -40,6 +42,16 @@ CREATE TABLE comment
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     content VARCHAR(500),
     time_added TIMESTAMP,
+    author_id BIGINT NOT NULL,
+    post_id BIGINT NOT NULL,
+    FOREIGN KEY (author_id) REFERENCES application_user(id),
+    FOREIGN KEY (post_id) REFERENCES post(id)
+);
+
+CREATE TABLE report
+(
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    cause VARCHAR(300),
     author_id BIGINT NOT NULL,
     post_id BIGINT NOT NULL,
     FOREIGN KEY (author_id) REFERENCES application_user(id),

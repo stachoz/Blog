@@ -5,6 +5,10 @@ import com.example.blogjava.post.dto.PostDtoMapper;
 import com.example.blogjava.post.dto.PostFormDto;
 import com.example.blogjava.post.dto.PostFormDtoMapper;
 import com.example.blogjava.post.post_comment.*;
+import com.example.blogjava.post.report.Report;
+import com.example.blogjava.post.report.ReportFormDto;
+import com.example.blogjava.post.report.ReportFormDtoMapper;
+import com.example.blogjava.post.report.ReportRepository;
 import com.example.blogjava.user.User;
 import com.example.blogjava.user.exception.UserNotFoundException;
 import com.example.blogjava.user.repos.UserRepository;
@@ -25,13 +29,15 @@ public class PostService {
     private final PostRepository postRepository;
     private final UserRepository userRepository;
     private final CommentRepository commentRepository;
+    private final ReportRepository reportRepository;
 
     public PostService(PostRepository postRepository,
                        UserRepository userRepository,
-                       CommentRepository commentRepository){
+                       CommentRepository commentRepository, ReportRepository reportRepository){
         this.postRepository = postRepository;
         this.userRepository = userRepository;
         this.commentRepository = commentRepository;
+        this.reportRepository = reportRepository;
     }
 
     @Transactional
@@ -58,11 +64,10 @@ public class PostService {
 
     @Transactional
     public void saveComment(CommentFormDto dto, Long postId){
-        String currentUserUsername = SecurityContextHolder.getContext().getAuthentication().getName();
-        Optional<User> user = userRepository.findByUsername(currentUserUsername);
+        Optional<User> currentUser = getCurrentUser();
         Comment comment = new Comment();
         comment.setContent(dto.getContent());
-        comment.setUser(user.get());
+        comment.setUser(currentUser.get());
         postRepository.findById(postId).ifPresentOrElse(
                 post -> {
                     comment.setPost(post);
@@ -90,9 +95,28 @@ public class PostService {
         }
     }
 
+    @Transactional
+    public void saveReport(ReportFormDto reportFormDto, Long postId){
+        User user = getCurrentUser().get();
+        Report report = ReportFormDtoMapper.map(reportFormDto);
+        postRepository.findById(postId).ifPresent(
+                post -> {
+                    report.setPost(post);
+                    report.setUser(user);
+                    reportRepository.save(report);
+                }
+        );
+
+    }
+
     private boolean isCurrentUserAdmin(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return authentication.getAuthorities().stream()
                 .anyMatch(authority -> authority.getAuthority().equals("ROLE_ADMIN"));
+    }
+
+    private Optional<User> getCurrentUser(){
+        String name = SecurityContextHolder.getContext().getAuthentication().getName();
+        return userRepository.findByUsername(name);
     }
 }
