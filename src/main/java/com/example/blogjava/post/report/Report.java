@@ -1,7 +1,6 @@
 package com.example.blogjava.post.report;
 
 import com.example.blogjava.post.Post;
-import com.example.blogjava.user.User;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
@@ -15,14 +14,11 @@ public class Report {
     @Size(max = 300)
     @Nullable
     private String cause;
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(
-            name = "author_id",
+            name = "post_id",
             referencedColumnName = "id"
     )
-    private User user;
-
-    @OneToOne
     private Post post;
 
     public Post getPost() {
@@ -47,13 +43,5 @@ public class Report {
 
     public void setCause(String cause) {
         this.cause = cause;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 }

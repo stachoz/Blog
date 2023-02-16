@@ -5,10 +5,7 @@ import com.example.blogjava.post.dto.PostDtoMapper;
 import com.example.blogjava.post.dto.PostFormDto;
 import com.example.blogjava.post.dto.PostFormDtoMapper;
 import com.example.blogjava.post.post_comment.*;
-import com.example.blogjava.post.report.Report;
-import com.example.blogjava.post.report.ReportFormDto;
-import com.example.blogjava.post.report.ReportFormDtoMapper;
-import com.example.blogjava.post.report.ReportRepository;
+import com.example.blogjava.post.report.*;
 import com.example.blogjava.user.User;
 import com.example.blogjava.user.exception.UserNotFoundException;
 import com.example.blogjava.user.repos.UserRepository;
@@ -19,6 +16,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -102,11 +100,18 @@ public class PostService {
         postRepository.findById(postId).ifPresent(
                 post -> {
                     report.setPost(post);
-                    report.setUser(user);
                     reportRepository.save(report);
                 }
         );
+    }
 
+    @Transactional
+    public List<ReportAdminDto> getAllReports(){
+        List<ReportAdminDto> reports = new ArrayList<>();
+        reportRepository.findAll().forEach(
+                report -> reports.add(ReportAdminDtoMapper.map(report))
+        );
+        return reports;
     }
 
     private boolean isCurrentUserAdmin(){

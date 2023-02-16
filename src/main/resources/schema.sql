@@ -52,8 +52,6 @@ CREATE TABLE report
 (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     cause VARCHAR(300),
-    author_id BIGINT NOT NULL,
     post_id BIGINT NOT NULL,
-    FOREIGN KEY (author_id) REFERENCES application_user(id),
     FOREIGN KEY (post_id) REFERENCES post(id)
 );

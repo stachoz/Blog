@@ -6,6 +6,11 @@ input {
     display: block;
 }
 
+table, th, td{
+    border-collapse: collapse;
+    border: 1px solid;
+}
+
 .navbar {
     display: flex;
     justify-content: space-around;
@@ -48,4 +53,12 @@ input {
 .page-navigation{
     display: flex;
     justify-content: space-between;
+}
+
+.admin-content {
+    display: flex;
+}
+
+.table-container {
+    padding: 10px;
 }

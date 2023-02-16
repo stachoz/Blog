@@ -1,6 +1,7 @@
 package com.example.blogjava.post;
 
 import com.example.blogjava.post.post_comment.Comment;
+import com.example.blogjava.post.report.Report;
 import com.example.blogjava.user.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
@@ -34,6 +35,18 @@ public class Post {
             referencedColumnName = "id"
     )
     private List<Comment> comments = new ArrayList<>();
+
+    @OneToMany(cascade = CascadeType.REMOVE,
+    mappedBy = "post")
+    private List<Report> reports = new ArrayList<>();
+
+    public List<Report> getReports() {
+        return reports;
+    }
+
+    public void setReports(List<Report> reports) {
+        this.reports = reports;
+    }
 
     public void setTimeAdded(Date timeAdded) {
         this.timeAdded = timeAdded;

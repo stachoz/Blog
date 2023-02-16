@@ -26,3 +26,9 @@ VALUES
     ('fourth post', 'this is fourth post', 2),
     ('fifth', 'this is fifth post', 1),
     ('sixth', 'this is sixts post', 1);
+
+insert into
+    report(cause, post_id)
+values
+    ('spam', 1),
+    ('spam2', 1);

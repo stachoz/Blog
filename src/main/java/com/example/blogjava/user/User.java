@@ -33,28 +33,14 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private Set<UserRole> userRoles = new HashSet<>();
-    @OneToMany(mappedBy = "user")
+
+    @OneToMany(mappedBy = "user",
+    cascade = CascadeType.REMOVE)
     private Set<Post> posts = new HashSet<>();
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user",
+    cascade = CascadeType.REMOVE)
     private Set<Comment> comments = new HashSet<>();
-
-    public Set<Post> getPosts() {
-        return posts;
-    }
-
-    public void setPosts(Set<Post> posts) {
-        this.posts = posts;
-    }
-
-    public Set<Comment> getComments() {
-        return comments;
-    }
-
-    public void setComments(Set<Comment> comments) {
-        this.comments = comments;
-    }
-
     public Long getId() {
         return id;
     }
