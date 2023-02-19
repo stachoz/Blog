@@ -9,7 +9,8 @@ INSERT INTO
     user_role(role_name)
 VALUES
     ('ADMIN'),
-    ('USER');
+    ('USER'),
+    ('BLOCKED_USER');
 
 INSERT INTO
     user_roles(user_id, role_id)
@@ -31,4 +32,4 @@ insert into
     report(cause, post_id)
 values
     ('spam', 1),
-    ('spam2', 1);
+    ('spam2', 2);

@@ -3,6 +3,25 @@ package com.example.blogjava.post.report;
 public class ReportAdminDto {
     private String cause;
     private String postTitle;
+    private String authorUsername;
+    private Long postId;
+    private Long postAuthorId;
+
+    public String getAuthorUsername() {
+        return authorUsername;
+    }
+
+    public void setAuthorUsername(String authorUsername) {
+        this.authorUsername = authorUsername;
+    }
+
+    public Long getPostAuthorId() {
+        return postAuthorId;
+    }
+
+    public void setPostAuthorId(Long postAuthorId) {
+        this.postAuthorId = postAuthorId;
+    }
 
     public Long getPostId() {
         return postId;
@@ -11,21 +30,15 @@ public class ReportAdminDto {
     public void setPostId(Long postId) {
         this.postId = postId;
     }
-
-    private Long postId;
-
     public String getPostTitle() {
         return postTitle;
     }
-
     public void setPostTitle(String postTitle) {
         this.postTitle = postTitle;
     }
-
     public String getCause() {
         return cause;
     }
-
     public void setCause(String cause) {
         this.cause = cause;
     }

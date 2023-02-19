@@ -28,6 +28,8 @@ public class PostService {
     private final UserRepository userRepository;
     private final CommentRepository commentRepository;
     private final ReportRepository reportRepository;
+    private final String BLOCKED_USER_AUTHORITY = "ROLE_BLOCKED_USER";
+    private final String ADMIN_AUTHORITY = "ROLE_ADMIN";
 
     public PostService(PostRepository postRepository,
                        UserRepository userRepository,
@@ -46,11 +48,13 @@ public class PostService {
 
     @Transactional
     public void savePost(PostFormDto postFormDto){
-        Post post = PostFormDtoMapper.map(postFormDto);
-        String name = SecurityContextHolder.getContext().getAuthentication().getName();
-        User user = userRepository.findByUsername(name).orElseThrow(UserNotFoundException::new);
-        post.setUser(user);
-        postRepository.save(post);
+        if (!hasCurrentUserAuthority(BLOCKED_USER_AUTHORITY)){
+            Post post = PostFormDtoMapper.map(postFormDto);
+            String name = SecurityContextHolder.getContext().getAuthentication().getName();
+            User user = userRepository.findByUsername(name).orElseThrow(UserNotFoundException::new);
+            post.setUser(user);
+            postRepository.save(post);
+        }
     }
 
     @Transactional
@@ -62,21 +66,23 @@ public class PostService {
 
     @Transactional
     public void saveComment(CommentFormDto dto, Long postId){
-        Optional<User> currentUser = getCurrentUser();
-        Comment comment = new Comment();
-        comment.setContent(dto.getContent());
-        comment.setUser(currentUser.get());
-        postRepository.findById(postId).ifPresentOrElse(
-                post -> {
-                    comment.setPost(post);
-                    post.getComments().add(comment);
-                    commentRepository.save(comment);
-                    postRepository.save(post);
-                },
-                () -> {
-                    throw new NoSuchElementException();
-                }
-        );
+        if(!hasCurrentUserAuthority(BLOCKED_USER_AUTHORITY)){
+            Optional<User> currentUser = getCurrentUser();
+            Comment comment = new Comment();
+            comment.setContent(dto.getContent());
+            comment.setUser(currentUser.get());
+            postRepository.findById(postId).ifPresentOrElse(
+                    post -> {
+                        comment.setPost(post);
+                        post.getComments().add(comment);
+                        commentRepository.save(comment);
+                        postRepository.save(post);
+                    },
+                    () -> {
+                        throw new NoSuchElementException();
+                    }
+            );
+        }
     }
 
     @Transactional
@@ -88,21 +94,22 @@ public class PostService {
 
     @Transactional
     public void deletePost(Long postId){
-        if(isCurrentUserAdmin()){
+        if(hasCurrentUserAuthority(ADMIN_AUTHORITY)){
             postRepository.deleteById(postId);
         }
     }
 
     @Transactional
     public void saveReport(ReportFormDto reportFormDto, Long postId){
-        User user = getCurrentUser().get();
-        Report report = ReportFormDtoMapper.map(reportFormDto);
-        postRepository.findById(postId).ifPresent(
-                post -> {
-                    report.setPost(post);
-                    reportRepository.save(report);
-                }
-        );
+        if(!hasCurrentUserAuthority(BLOCKED_USER_AUTHORITY)){
+            Report report = ReportFormDtoMapper.map(reportFormDto);
+            postRepository.findById(postId).ifPresent(
+                    post -> {
+                        report.setPost(post);
+                        reportRepository.save(report);
+                    }
+            );
+        }
     }
 
     @Transactional
@@ -114,10 +121,10 @@ public class PostService {
         return reports;
     }
 
-    private boolean isCurrentUserAdmin(){
+    private boolean hasCurrentUserAuthority(String authority){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return authentication.getAuthorities().stream()
-                .anyMatch(authority -> authority.getAuthority().equals("ROLE_ADMIN"));
+                .anyMatch(a -> a.getAuthority().equals(authority));
     }
 
     private Optional<User> getCurrentUser(){

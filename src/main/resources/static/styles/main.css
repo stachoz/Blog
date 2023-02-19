@@ -62,3 +62,7 @@ table, th, td{
 .table-container {
     padding: 10px;
 }
+
+.message{
+    color: red;
+}

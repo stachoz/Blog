@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -17,6 +18,9 @@ import java.util.List;
 public class AdminPageController {
     private final UserService userService;
     private final PostService postService;
+    private final String USER_ROLE = "USER";
+    private final String BLOCKED_USER_ROLE = "BLOCKED_USER";
+    private final String ADMIN_AUTHORITY = "ROLE_ADMIN";
 
     public AdminPageController(UserService userService, PostService postService){
         this.userService = userService;
@@ -24,9 +28,15 @@ public class AdminPageController {
     }
     @GetMapping("")
     String admin(Model model){
-        List<UserDto> usersInformation = userService.findUsersInformation();
+        List<UserDto> usersInformation = userService.findUsersInformation(USER_ROLE);
+        List<UserDto> blockedUsersInformation = userService.findUsersInformation(BLOCKED_USER_ROLE);
         List<ReportAdminDto> reports = postService.getAllReports();
+        String blockMessage =(String) model.asMap().get("block message");
+        String unBlockMessage =(String) model.asMap().get("unblock message");
+        model.addAttribute("blockMessage", blockMessage);
+        model.addAttribute("unBlockMessage", unBlockMessage);
         model.addAttribute("users", usersInformation);
+        model.addAttribute("blockedUsers", blockedUsersInformation);
         model.addAttribute("reports", reports);
         return "admin";
     }
@@ -40,6 +50,21 @@ public class AdminPageController {
     @GetMapping("/delete-post")
     String deletePost(@RequestParam Long postId){
         postService.deletePost(postId);
+        return "redirect:/admin";
+    }
+
+    @GetMapping("/block-user")
+    String blockUser(@RequestParam Long userId, RedirectAttributes redirectAttributes){
+        userService.blockUser(userId);
+        String username = userService.getUserUsername(userId);
+        redirectAttributes.addFlashAttribute("block message", username + " is blocked");
+        return "redirect:/admin";
+    }
+
+    @GetMapping("/unblock-user")
+    String unblockUser(@RequestParam String username, RedirectAttributes redirectAttributes){
+        userService.unblockUser(username);
+        redirectAttributes.addFlashAttribute("unblock message", username + " is unblocked");
         return "redirect:/admin";
     }
 }
