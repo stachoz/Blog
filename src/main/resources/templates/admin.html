@@ -8,63 +8,65 @@
 </head>
 <body>
     <header th:replace="fragments :: header"></header>
-    <h1>Admin page</h1>
-    <p class="message" th:text="${blockMessage}"></p>
-    <p class="message" th:text="${unBlockMessage}"></p>
-    <div class="admin-content">
-        <div class="table-container">
-            <h3>Users</h3>
-            <table>
-                <tr>
-                    <th>index</th>
-                    <th>username</th>
-                    <th>email</th>
-                    <th>action</th>
-                </tr>
-                <tr th:each="user, i : ${users}" th:object="${user}">
-                    <td th:text="${i.index}"></td>
-                    <td th:text="*{username}"></td>
-                    <td th:text="*{email}"></td>
-                    <td><a th:href="@{/admin/delete-user(username=*{username})}">Delete</a></td>
-                </tr>
-            </table>
-        </div>
-        <div class="table-container">
-            <h3>Blocked Users</h3>
-            <table>
-                <tr>
-                    <th>index</th>
-                    <th>username</th>
-                    <th>email</th>
-                    <th>action</th>
-                </tr>
-                <tr th:each="blockedUser, i : ${blockedUsers}" th:object="${blockedUser}">
-                    <td th:text="${i.index}"></td>
-                    <td th:text="*{username}"></td>
-                    <td th:text="*{email}"></td>
-                    <td><a th:href="@{/admin/unblock-user(username=*{username})}">Unblock</a></td>
-                </tr>
-            </table>
-        </div>
-        <div class="table-container">
-            <h3>Reports</h3>
-            <table>
-                <tr>
-                    <th>index</th>
-                    <th>cause</th>
-                    <th>post</th>
-                    <th>author of post</th>
-                    <th></th>
-                </tr>
-                <tr th:each="report, i : ${reports}" th:object="${report}">
-                    <td th:text="${i.index}"></td>
-                    <td th:text="*{cause}"></td>
-                    <td th:text="*{postTitle}"></td>
-                    <td th:text="*{authorUsername}"></td>
-                    <td><a th:href="@{admin/delete-post(postId = *{postId})}">Delete Post</a>
-                        <a th:href="@{admin/block-user(userId = *{postAuthorId})}">Block User</a><a>Delete report</a></td>
-                </tr>
-            </table>
+    <div sec:authorize="hasRole('ROLE_ADMIN')">
+        <h1>Admin page</h1>
+        <p class="message" th:text="${blockMessage}"></p>
+        <p class="message" th:text="${unBlockMessage}"></p>
+        <div class="admin-content">
+            <div class="table-container">
+                <h3>Users</h3>
+                <table>
+                    <tr>
+                        <th>index</th>
+                        <th>username</th>
+                        <th>email</th>
+                        <th>action</th>
+                    </tr>
+                    <tr th:each="user, i : ${users}" th:object="${user}">
+                        <td th:text="${i.index}"></td>
+                        <td th:text="*{username}"></td>
+                        <td th:text="*{email}"></td>
+                        <td><a th:href="@{/admin/delete-user(username=*{username})}">Delete</a></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="table-container">
+                <h3>Blocked Users</h3>
+                <table>
+                    <tr>
+                        <th>index</th>
+                        <th>username</th>
+                        <th>email</th>
+                        <th>action</th>
+                    </tr>
+                    <tr th:each="blockedUser, i : ${blockedUsers}" th:object="${blockedUser}">
+                        <td th:text="${i.index}"></td>
+                        <td th:text="*{username}"></td>
+                        <td th:text="*{email}"></td>
+                        <td><a th:href="@{/admin/unblock-user(username=*{username})}">Unblock</a></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="table-container">
+                <h3>Reports</h3>
+                <table>
+                    <tr>
+                        <th>index</th>
+                        <th>cause</th>
+                        <th>post</th>
+                        <th>author of post</th>
+                        <th></th>
+                    </tr>
+                    <tr th:each="report, i : ${reports}" th:object="${report}">
+                        <td th:text="${i.index}"></td>
+                        <td th:text="*{cause}"></td>
+                        <td th:text="*{postTitle}"></td>
+                        <td th:text="*{authorUsername}"></td>
+                        <td><a th:href="@{admin/delete-post(postId = *{postId})}">Delete Post</a>
+                            <a th:href="@{admin/block-user(userId = *{postAuthorId})}">Block User</a><a>Delete report</a></td>
+                    </tr>
+                </table>
+            </div>
         </div>
     </div>
 </body>

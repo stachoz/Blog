@@ -7,8 +7,8 @@
 <body>
     <header th:replace="fragments :: header"></header>
     <section class="content">
-        <h3 class="message" sec:authorize="hasRole('ROLE_BLOCKED_USER')">You are blocked</h3>
-        <h4>
+        <h3 class="message" sec:authorize="hasRole('ROLE_BLOCKED_USER')">You are blocked. You can not add posts and comment them</h3>
+        <h4 sec:authorize="!hasRole('ROLE_BLOCKED_USER')">
             <a sec:authorize="isAuthenticated()" th:href="@{/post/add}">Add post</a>
         </h4>
         <div th:each="post : ${posts}">

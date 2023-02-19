@@ -18,10 +18,10 @@
                 </div>
                 <a th:text="${post.title}"></a>
                 <p th:text="${post.content}"></p>
-                <a sec:authorize="isAuthenticated()" th:href="@{{postId}/report(postId = ${post.id})}">Report</a>
+                <a sec:authorize="isAuthenticated() and !hasRole('ROLE_BLOCKED_USER')" th:href="@{{postId}/report(postId = ${post.id})}">Report</a>
                 <hr>
             </div>
-            <div sec:authorize="isAuthenticated()">
+            <div sec:authorize="isAuthenticated() and !hasRole('ROLE_BLOCKED_USER')">
                 <form method="post" th:action="@{/post/{postId}/saveComment(postId = ${post.id})}" th:object="${commentForm}">
                     <textarea th:field="*{content}" placeholder="add comment"></textarea>
                     <button type="submit">Add comment</button>
