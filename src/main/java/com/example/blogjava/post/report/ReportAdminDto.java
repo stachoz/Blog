@@ -1,11 +1,20 @@
 package com.example.blogjava.post.report;
 
 public class ReportAdminDto {
+    private Long id;
     private String cause;
     private String postTitle;
     private String authorUsername;
     private Long postId;
     private Long postAuthorId;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getAuthorUsername() {
         return authorUsername;

@@ -2,6 +2,7 @@ package com.example.blogjava.web;
 
 import com.example.blogjava.post.PostService;
 import com.example.blogjava.post.report.ReportAdminDto;
+import com.example.blogjava.post.report.ReportService;
 import com.example.blogjava.user.UserService;
 import com.example.blogjava.user.dto.UserDto;
 import org.springframework.stereotype.Controller;
@@ -18,13 +19,15 @@ import java.util.List;
 public class AdminPageController {
     private final UserService userService;
     private final PostService postService;
+    private final ReportService reportService;
     private final String USER_ROLE = "USER";
     private final String BLOCKED_USER_ROLE = "BLOCKED_USER";
     private final String ADMIN_AUTHORITY = "ROLE_ADMIN";
 
-    public AdminPageController(UserService userService, PostService postService){
+    public AdminPageController(UserService userService, PostService postService, ReportService reportService){
         this.userService = userService;
         this.postService = postService;
+        this.reportService = reportService;
     }
     @GetMapping("")
     String admin(Model model){
@@ -65,6 +68,11 @@ public class AdminPageController {
     String unblockUser(@RequestParam String username, RedirectAttributes redirectAttributes){
         userService.unblockUser(username);
         redirectAttributes.addFlashAttribute("unblock message", username + " is unblocked");
+        return "redirect:/admin";
+    }
+    @GetMapping("/delete-report")
+    String deleteReport(@RequestParam Long reportId){
+        reportService.deleteReport(reportId);
         return "redirect:/admin";
     }
 }

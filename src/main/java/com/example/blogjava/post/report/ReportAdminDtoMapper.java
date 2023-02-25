@@ -3,6 +3,7 @@ package com.example.blogjava.post.report;
 public class ReportAdminDtoMapper {
     public static ReportAdminDto map(Report report){
         ReportAdminDto dto = new ReportAdminDto();
+        dto.setId(report.getId());
         dto.setCause(report.getCause());
         dto.setPostTitle(report.getPost().getTitle());
         dto.setAuthorUsername(report.getPost().getUser().getUsername());

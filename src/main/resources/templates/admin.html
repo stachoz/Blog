@@ -63,7 +63,8 @@
                         <td th:text="*{postTitle}"></td>
                         <td th:text="*{authorUsername}"></td>
                         <td><a th:href="@{admin/delete-post(postId = *{postId})}">Delete Post</a>
-                            <a th:href="@{admin/block-user(userId = *{postAuthorId})}">Block User</a><a>Delete report</a></td>
+                            <a th:href="@{admin/block-user(userId = *{postAuthorId})}">Block User</a>
+                            <a th:href="@{admin/delete-report(reportId = *{id})}">Delete report</a></td>
                     </tr>
                 </table>
             </div>
