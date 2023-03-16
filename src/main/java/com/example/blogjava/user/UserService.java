@@ -1,7 +1,6 @@
 package com.example.blogjava.user;
 
 import com.example.blogjava.user.dto.*;
-import com.example.blogjava.user.exception.UserNotFoundException;
 import com.example.blogjava.user.repos.UserRepository;
 import com.example.blogjava.user.repos.UserRoleRepository;
 import jakarta.validation.ConstraintViolation;
@@ -9,7 +8,6 @@ import jakarta.validation.ConstraintViolationException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,15 +21,15 @@ import java.util.stream.Collectors;
 public class UserService {
     private final UserRepository userRepository;
     private final UserRoleRepository userRoleRepository;
-    private final PasswordEncoder passwordEncoder;
+    private final UserRegistrationDtoMapper userRegistrationDtoMapper;
     private final String USER_ROLE = "USER";
     private final String BLOCKED_USER_ROLE = "BLOCKED_USER";
     private final String ADMIN_AUTHORITY = "ROLE_ADMIN";
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, UserRoleRepository userRoleRepository){
+    public UserService(UserRepository userRepository,UserRoleRepository userRoleRepository, UserRegistrationDtoMapper userRegistrationDtoMapper){
         this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
         this.userRoleRepository = userRoleRepository;
+        this.userRegistrationDtoMapper = userRegistrationDtoMapper;
     }
 
     public Optional<UserCredentialsDto> findCredentialsByUsername(String username){
@@ -53,7 +51,7 @@ public class UserService {
     }
 
     public String getUserUsername(Long userId){
-        User user = userRepository.findById(userId).orElseThrow(() -> new NoSuchElementException());
+        User user = userRepository.findById(userId).orElseThrow(NoSuchElementException::new);
         return user.getUsername();
     }
 
@@ -66,19 +64,8 @@ public class UserService {
 
     @Transactional
     public void registerUser(UserRegistrationDto dto){
-        //TODO mapper
-        User user = new User();
+        User user = userRegistrationDtoMapper.map(dto);
         try{
-            user.setEmail(dto.getEmail());
-            user.setUsername(dto.getUsername());
-            user.setPassword(passwordEncoder.encode(dto.getPassword()));
-            Optional<UserRole> userRole = userRoleRepository.findUserRoleByRoleName(USER_ROLE);
-            userRole.ifPresentOrElse(
-                    role -> user.getUserRoles().add(role),
-                    () -> {
-                        throw new NoSuchElementException();
-                    }
-            );
             userRepository.save(user);
         } catch (ConstraintViolationException cve){
             Set<ConstraintViolation<?>> constraintViolations = cve.getConstraintViolations();
@@ -99,9 +86,9 @@ public class UserService {
     @Transactional
     public void blockUser(Long userId){
         if (isCurrentUserAdmin()){
-            User user = userRepository.findById(userId).orElseThrow(() -> new NoSuchElementException());
-            UserRole userRole = userRoleRepository.findUserRoleByRoleName(USER_ROLE).orElseThrow(() -> new NoSuchElementException());
-            UserRole blockedUserRole = userRoleRepository.findUserRoleByRoleName(BLOCKED_USER_ROLE).orElseThrow(() -> new NoSuchElementException());
+            User user = userRepository.findById(userId).orElseThrow(NoSuchElementException::new);
+            UserRole userRole = userRoleRepository.findUserRoleByRoleName(USER_ROLE).orElseThrow(NoSuchElementException::new);
+            UserRole blockedUserRole = userRoleRepository.findUserRoleByRoleName(BLOCKED_USER_ROLE).orElseThrow(NoSuchElementException::new);
             user.getUserRoles().remove(userRole);
             user.getUserRoles().add(blockedUserRole);
         }
@@ -110,9 +97,9 @@ public class UserService {
     @Transactional
     public void unblockUser(String username){
         if(isCurrentUserAdmin()){
-            User user= userRepository.findByUsername(username).orElseThrow(() -> new NoSuchElementException());
-            UserRole blockedUserRole = userRoleRepository.findUserRoleByRoleName(BLOCKED_USER_ROLE).orElseThrow(() -> new NoSuchElementException());
-            UserRole userRole = userRoleRepository.findUserRoleByRoleName(USER_ROLE).orElseThrow(() -> new NoSuchElementException());
+            User user= userRepository.findByUsername(username).orElseThrow(NoSuchElementException::new);
+            UserRole blockedUserRole = userRoleRepository.findUserRoleByRoleName(BLOCKED_USER_ROLE).orElseThrow(NoSuchElementException::new);
+            UserRole userRole = userRoleRepository.findUserRoleByRoleName(USER_ROLE).orElseThrow(NoSuchElementException::new);
             user.getUserRoles().remove(blockedUserRole);
             user.getUserRoles().add(userRole);
         }

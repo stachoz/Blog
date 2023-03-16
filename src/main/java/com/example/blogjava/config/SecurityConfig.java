@@ -19,11 +19,13 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         PathRequest.H2ConsoleRequestMatcher h2ConsoleRequestMatcher = PathRequest.toH2Console();
         http.authorizeHttpRequests(requests -> requests
+                .requestMatchers(h2ConsoleRequestMatcher).permitAll()
                 .requestMatchers("/styles/**").permitAll()
                 .requestMatchers("/", "/next_page", "/previous_page").permitAll()
                 .requestMatchers("/admin/**").hasRole(ADMIN_ROLE)
                 .requestMatchers("/profile/**").hasRole(USER_ROLE)
                 .requestMatchers(HttpMethod.GET,"/post/*").permitAll()
+                .requestMatchers("/register/**").permitAll()
                 .anyRequest().authenticated()
         );
 
@@ -37,10 +39,8 @@ public class SecurityConfig {
         http.csrf().disable();
         return http.build();
     }
-
     @Bean
     PasswordEncoder passwordEncoder(){
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
-
 }

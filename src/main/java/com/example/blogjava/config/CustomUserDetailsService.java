@@ -2,10 +2,13 @@ package com.example.blogjava.config;
 
 import com.example.blogjava.user.UserService;
 import com.example.blogjava.user.dto.UserCredentialsDto;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -20,7 +23,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
        return userService.findCredentialsByUsername(username)
                .map(dto -> createUserDetails(dto))
-               .orElseThrow(() -> new UsernameNotFoundException(String.format("Username with email %s not foung", username)));
+               .orElseThrow(() -> new UsernameNotFoundException(String.format("Username with email %s not found", username)));
     }
 
     private UserDetails createUserDetails(UserCredentialsDto dto){
