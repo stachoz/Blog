@@ -10,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class RegistrationController {
@@ -29,7 +30,8 @@ public class RegistrationController {
     }
 
     @PostMapping("/register")
-    String register(@Valid @ModelAttribute("user") UserRegistrationDto userRegistrationDto, BindingResult bindingResult){
+    String register(@Valid @ModelAttribute("user") UserRegistrationDto userRegistrationDto, BindingResult bindingResult,
+                    RedirectAttributes redirectAttributes){
         if (bindingResult.hasErrors()){
             return "register-form";
         }
@@ -43,13 +45,8 @@ public class RegistrationController {
             bindingResult.rejectValue("username", "", "username is already taken");
             return "register-form";
         }
-
+        redirectAttributes.addFlashAttribute("register successful", "you have registered successfully");
         userService.registerUser(userRegistrationDto);
-        return "redirect:/successful";
-    }
-
-    @GetMapping("/successful")
-    String registerConfirmation(){
-        return "register-confirmation";
+        return "redirect:/login";
     }
 }
