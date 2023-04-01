@@ -8,7 +8,7 @@
 </head>
 <body>
     <header th:replace="fragments :: header"></header>
-    <section class="content" sec:authorize="hasRole('ROLE_BLOCKED_USER')">
+    <section class="content" sec:authorize="!hasRole('ROLE_BLOCKED_USER')">
         <form method="post" action="/post/save" th:object="${post}" class="add-post-form">
             <textarea th:field="*{title}" placeholder="title" id="title-input" maxlength="100"></textarea>
             <textarea th:field="*{content}" placeholder="write..." id="content-input"></textarea>

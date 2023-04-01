@@ -21,15 +21,7 @@ VALUES
 INSERT INTO
     post(title, content, author_id)
 VALUES
-    ('first post', 'this is first post', 1),
-    ('second post', 'this is second post', 2),
-    ('third post', 'this is third post', 2),
-    ('fourth post', 'this is fourth post', 2),
-    ('fifth', 'this is fifth post', 1),
-    ('sixth', 'this is sixts post', 1);
-
-insert into
-    report(cause, post_id)
-values
-    ('spam', 1),
-    ('spam2', 2);
+    ('Project', 'I have no project idea in java, could you help? ', 2),
+    ('Bitcoin 122k', 'What do you think about current price? I hope for a price drop.', 2),
+    ('Java 20!!!', 'Java 20 has been released! What is new? -scoped values -records patterns -vector API proposal -foreign function and memory API', 1),
+    ('IT JOB','How did you guys get your first IT job? Tell me your story.', 2);
