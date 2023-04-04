@@ -9,7 +9,7 @@
 
 ### Logged in user
 - create, report, comment posts
-- view profiles
 
 ### Anonymous users
 - read posts
+- view profiles
