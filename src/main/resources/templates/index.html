@@ -14,7 +14,7 @@
         <div th:each="post : ${posts}">
             <div class="post-info">
                 <a th:href="@{/profile(username=${post.author})}">
-                    <p th:text="${post.author}"></p>
+                    <p th:text="${post.author}">Username</p>
                 </a>
                 <p th:text="${#dates.format(post.timeAdded, 'dd-MM-yyyy HH:mm')}"></p>
             </div>

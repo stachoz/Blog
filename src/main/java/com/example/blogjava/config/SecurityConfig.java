@@ -23,7 +23,7 @@ public class SecurityConfig {
                 .requestMatchers("/styles/**").permitAll()
                 .requestMatchers("/", "/next_page", "/previous_page").permitAll()
                 .requestMatchers("/admin/**").hasRole(ADMIN_ROLE)
-                .requestMatchers("/profile/**").hasRole(USER_ROLE)
+                .requestMatchers("/profile/**").permitAll()
                 .requestMatchers(HttpMethod.GET,"/post/*").permitAll()
                 .requestMatchers("/login/**").permitAll()
                 .requestMatchers("/register/**").permitAll()
@@ -32,9 +32,10 @@ public class SecurityConfig {
 
         http.formLogin(login -> login
                 .loginPage("/login")
+                .failureForwardUrl("/login")
+                .successForwardUrl("/")
                 .permitAll());
         http.logout().logoutSuccessUrl("/");
-        http.formLogin().defaultSuccessUrl("/");
         http.csrf(csrf -> csrf.ignoringRequestMatchers(PathRequest.toH2Console()));
         http.headers().frameOptions().sameOrigin();
         http.csrf().disable();
