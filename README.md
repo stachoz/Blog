@@ -1,6 +1,6 @@
 # Web blog application written using Spring, Hibernate, H2-Console and Thymeleaf.
 
-## Functionalites
+## Functionalities
 
 ### Admin
 - Delete posts
