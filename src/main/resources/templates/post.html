@@ -24,6 +24,7 @@
             <div sec:authorize="isAuthenticated() and !hasRole('ROLE_BLOCKED_USER')">
                 <form method="post" th:action="@{/post/{postId}/saveComment(postId = ${post.id})}" th:object="${commentForm}">
                     <textarea th:field="*{content}" placeholder="add comment"></textarea>
+                    <p th:errors="*{content}">Content errors</p>
                     <button type="submit">Add comment</button>
                 </form>
             </div>
