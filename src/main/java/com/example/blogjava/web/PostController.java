@@ -7,6 +7,7 @@ import com.example.blogjava.post.post_comment.CommentDto;
 import com.example.blogjava.post.post_comment.CommentFormDto;
 import com.example.blogjava.post.report.ReportFormDto;
 import jakarta.validation.Valid;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -47,10 +48,10 @@ public class PostController {
     }
 
     @PostMapping("/{postId}/saveComment")
-    String saveComment(@Valid @ModelAttribute CommentFormDto commentFormDto, BindingResult bindingResult,
+    String saveComment(@Valid @ModelAttribute CommentFormDto commentFormDto, @NotNull BindingResult bindingResult,
                        @PathVariable Long postId){
         if (bindingResult.hasErrors()) {
-            return "post";
+            return "redirect:/post/" + postId;
         }
         postService.saveComment(commentFormDto, postId);
         return "redirect:/post/" + postId;

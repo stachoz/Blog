@@ -67,10 +67,10 @@ public class PostService {
     @Transactional
     public void saveComment(CommentFormDto dto, Long postId){
         if(!hasCurrentUserAuthority(BLOCKED_USER_AUTHORITY)){
-            Optional<User> currentUser = getCurrentUser();
+            User currentUser = getCurrentUser();
             Comment comment = new Comment();
             comment.setContent(dto.getContent());
-            comment.setUser(currentUser.get());
+            comment.setUser(currentUser);
             postRepository.findById(postId).ifPresentOrElse(
                     post -> {
                         comment.setPost(post);
@@ -127,8 +127,8 @@ public class PostService {
                 .anyMatch(a -> a.getAuthority().equals(authority));
     }
 
-    private Optional<User> getCurrentUser(){
+    private User getCurrentUser(){
         String name = SecurityContextHolder.getContext().getAuthentication().getName();
-        return userRepository.findByUsername(name);
+        return userRepository.findByUsername(name).orElseThrow(NoSuchElementException::new);
     }
 }

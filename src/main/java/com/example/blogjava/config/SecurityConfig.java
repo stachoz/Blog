@@ -33,7 +33,6 @@ public class SecurityConfig {
         http.formLogin(login -> login
                 .loginPage("/login")
                 .failureForwardUrl("/login")
-                .successForwardUrl("/")
                 .permitAll());
         http.logout().logoutSuccessUrl("/");
         http.csrf(csrf -> csrf.ignoringRequestMatchers(PathRequest.toH2Console()));
