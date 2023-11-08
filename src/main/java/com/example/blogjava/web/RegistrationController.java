@@ -47,6 +47,6 @@ public class RegistrationController {
         }
         redirectAttributes.addFlashAttribute("register successful", "you have registered successfully");
         userService.registerUser(userRegistrationDto);
-        return "redirect:/login";
+        return "redirect:/";
     }
 }

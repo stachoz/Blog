@@ -4,12 +4,15 @@ import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
+@EnableWebSecurity
 public class SecurityConfig {
     private final String USER_ROLE = "USER";
     private final String BLOCKED_USER_ROLE = "BLOCKED_USER";
@@ -25,14 +28,11 @@ public class SecurityConfig {
                 .requestMatchers("/admin/**").hasRole(ADMIN_ROLE)
                 .requestMatchers("/profile/**").permitAll()
                 .requestMatchers(HttpMethod.GET,"/post/*").permitAll()
-                .requestMatchers("/login/**").permitAll()
                 .requestMatchers("/register/**").permitAll()
-                .anyRequest().authenticated()
+                .anyRequest().permitAll()
         );
-
         http.formLogin(login -> login
                 .loginPage("/login")
-                .failureForwardUrl("/")
                 .permitAll());
         http.logout().logoutSuccessUrl("/");
         http.csrf(csrf -> csrf.ignoringRequestMatchers(PathRequest.toH2Console()));
