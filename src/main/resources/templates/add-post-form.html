@@ -9,11 +9,13 @@
 <body>
     <header th:replace="fragments :: header"></header>
     <section class="content" sec:authorize="!hasRole('ROLE_BLOCKED_USER')">
-        <form method="post" action="/post/save" th:object="${post}" class="add-post-form">
-            <textarea th:field="*{title}" placeholder="title" id="title-input" maxlength="100"></textarea>
-            <textarea th:field="*{content}" placeholder="write..." id="content-input"></textarea>
+        <form method="post" th:action="@{/post/save}" th:object="${post}" class="add-post-form">
+            <textarea th:field="*{title}" class="form-control" id="title-input" rows="3"
+                      placeholder="title" maxlength="100"></textarea>
+            <textarea th:field="*{content}" class="form-control" id="content-input" rows="3"
+                      placeholder="write..." maxlength="1000"></textarea>
             <p th:errors="*{content}"></p>
-            <button type="submit">Add post</button>
+            <button class="btn btn-primary" type="submit">Add post</button>
         </form>
     </section>
     <footer th:replace="fragments :: footer"></footer>

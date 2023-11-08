@@ -57,6 +57,7 @@ table, th, td{
 
 .admin-content {
     display: flex;
+    justify-content: space-around;
 }
 
 .table-container {

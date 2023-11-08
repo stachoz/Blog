@@ -13,18 +13,16 @@
 				Invalid login or password
 			</div>
 			<form method="post" th:action="@{/login}">
-				<div>
-					<label>Username:
-						<input type="text" name="username">
-					</label>
+				<div class="mb-3">
+					<label for="exampleInputEmail1" class="form-label">Username</label>
+					<input name="username" type="text" class="form-control" id="exampleInputEmail1">
+				</div>
+				<div class="mb-3">
+					<label for="exampleInputPassword1" class="form-label">Password</label>
+					<input name="password" type="password" class="form-control" id="exampleInputPassword1">
 				</div>
 				<div>
-					<label>Password:
-						<input type="password" name="password">
-					</label>
-				</div>
-				<div>
-					<button type="submit">Sign in</button>
+					<button class="btn btn-primary" type="submit">Sign in</button>
 				</div>
 
 			</form>

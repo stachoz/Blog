@@ -8,15 +8,27 @@
         <h3>Register</h3>
         <div>
             <form method="post" th:action="@{/register}" action="/register" th:object="${user}">
-                <input th:field="*{email}" type="text" placeholder="example@email.com">
-                <p th:errors="*{email}">email errors</p>
-                <input th:field="*{username}" type="text" placeholder="username">
-                <p th:errors="*{username}">username errors</p>
-                <input th:field="*{password}" type="password" placeholder="password">
-                <p th:errors="*{password}">password errors</p>
-                <input th:field="*{passwordRepeat}" type="password" placeholder="repeat password">
-                <p th:errors="*{global}"></p>
-                <button type="submit">Register</button>
+                <div class="mb-3">
+                    <p th:errors="*{email}">email errors</p>
+                    <label for="exampleInputEmail1" class="form-label">Email</label>
+                    <input th:field="*{email}" type="text" class="form-control" id="exampleInputEmail1">
+                </div>
+                <div class="mb-3">
+                    <p th:errors="*{username}">username errors</p>
+                    <label  class="form-label">Username</label>
+                    <input th:field="*{username}" type="text" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <p th:errors="*{password}">password errors</p>
+                    <label class="form-label">Password</label>
+                    <input th:field="*{password}"type="password" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <p th:errors="*{global}"></p>
+                    <label class="form-label">Repeat password</label>
+                    <input th:field="*{passwordRepeat}" type="password" class="form-control">
+                </div>
+                <button class="btn btn-primary" type="submit">Register</button>
             </form>
         </div>
     </section>
