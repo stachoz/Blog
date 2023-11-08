@@ -23,9 +23,11 @@
             </div>
             <div sec:authorize="isAuthenticated() and !hasRole('ROLE_BLOCKED_USER')">
                 <form method="post" th:action="@{/post/{postId}/saveComment(postId = ${post.id})}" th:object="${commentForm}">
-                    <textarea th:field="*{content}" placeholder="add comment"></textarea>
+                    <div class="mb-3">
+                        <textarea th:field="*{content}" class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="type something..."></textarea>
+                    </div>
                     <p th:errors="*{content}">Content errors</p>
-                    <button type="submit">Add comment</button>
+                    <button type="submit" class="btn btn-primary">Add comment</button>
                 </form>
             </div>
             <div sec:authorize="!isAuthenticated()">
@@ -33,11 +35,12 @@
             </div>
             <h3>Comments</h3>
             <div class="comments" th:each="comment : ${comments}">
-                <div class="comment">
+                <div class="comment" >
                     <p th:text="${comment.authorUsername}"></p>
                     <p th:text="${#dates.format(comment.timeAdded, 'dd-MM-yyyy HH:mm')}"></p>
                     <p th:text="${comment.content}"></p>
                 </div>
+                <hr>
             </div>
         </section>
     <footer th:replace="fragments :: footer"></footer>

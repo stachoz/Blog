@@ -66,3 +66,7 @@ table, th, td{
 .message{
     color: red;
 }
+
+.comments p {
+    margin-bottom: 0.2rem;
+}
