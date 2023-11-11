@@ -1,4 +1,4 @@
-# Web blog application written using Spring, Hibernate, H2-Console and Thymeleaf.
+# Web blog application written using Spring, Hibernate, MySQL and Thymeleaf.
 
 
 ## Running the application locally
