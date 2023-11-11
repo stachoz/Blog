@@ -20,9 +20,7 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        PathRequest.H2ConsoleRequestMatcher h2ConsoleRequestMatcher = PathRequest.toH2Console();
         http.authorizeHttpRequests(requests -> requests
-                .requestMatchers(h2ConsoleRequestMatcher).permitAll()
                 .requestMatchers("/styles/**").permitAll()
                 .requestMatchers("/", "/next_page", "/previous_page").permitAll()
                 .requestMatchers("/admin/**").hasRole(ADMIN_ROLE)
