@@ -11,6 +11,9 @@
         <h4 sec:authorize="!hasRole('ROLE_BLOCKED_USER')">
             <a sec:authorize="isAuthenticated()" th:href="@{/post/add}">Add post</a>
         </h4>
+        <div th:if="${posts.isEmpty()}">
+            <p>There is no content. Sign up and write something.</p>
+        </div>
         <div th:each="post : ${posts}">
             <div class="post-info">
                 <a th:href="@{/profile(username=${post.author})}">
