@@ -25,3 +25,9 @@ VALUES
     ('Bitcoin 122k', 'What do you think about current price? I hope for a price drop.', 2),
     ('Java 20!!!', 'Java 20 has been released! What is new? -scoped values -records patterns -vector API proposal -foreign function and memory API', 1),
     ('IT JOB','How did you guys get your first IT job? Tell me your story.', 2);
+
+INSERT INTO
+    report(cause, post_id)
+VALUES
+    ('do not like it', 2),
+    ('this topic has already been discussed', 3);

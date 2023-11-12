@@ -14,8 +14,6 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-    private final String USER_ROLE = "USER";
-    private final String BLOCKED_USER_ROLE = "BLOCKED_USER";
     private final String ADMIN_ROLE = "ADMIN";
 
     @Bean

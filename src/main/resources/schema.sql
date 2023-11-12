@@ -8,9 +8,10 @@ DROP TABLE IF EXISTS report;
 CREATE TABLE application_user
 (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(50) NOT NULL,
-    email VARCHAR(80) NOT NULL ,
-    password VARCHAR(200) NOT NULL
+    username VARCHAR(50) NOT NULL unique ,
+    email VARCHAR(80) NOT NULL unique ,
+    password VARCHAR(200) NOT NULL,
+    UNIQUE (username, email)
 );
 CREATE TABLE user_role
 (
