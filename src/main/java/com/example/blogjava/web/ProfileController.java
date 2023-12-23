@@ -21,6 +21,7 @@ public class ProfileController {
     String profile(@RequestParam String username, Model model){
         UserDto userDto = userService.findUserInformationByName(username);
         model.addAttribute("user", userDto);
+        model.addAttribute("postsCount", userService.countPosts());
         return "profile";
     }
 

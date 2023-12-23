@@ -4,11 +4,14 @@
 </head>
 <body>
     <header th:replace="fragments :: header"></header>
-    <h1>Profile page</h1>
-    <div th:object="${user}">
-        <p th:text="|username: *{username}|">username: john</p>
-        <p th:text="|email: *{email}|">email: john@example.com</p>
-    </div>
+    <section class="profile-content">
+        <h1 th:text="|${user.username} profile|">Profile page</h1>
+        <div th:object="${user}">
+            <p th:text="|username: *{username}|">username: john</p>
+            <p th:text="|email: *{email}|">email: john@example.com</p>
+            <p th:text="|written posts: ${postsCount}|">written posts: 2137</p>
+        </div>
+    </section>
     <footer th:replace="fragments :: footer"></footer>
 
 </body>
