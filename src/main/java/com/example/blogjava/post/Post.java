@@ -36,7 +36,7 @@ public class Post {
     )
     private List<Comment> comments = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.REMOVE,
+    @OneToMany(cascade = CascadeType.ALL,
     mappedBy = "post")
     private List<Report> reports = new ArrayList<>();
 

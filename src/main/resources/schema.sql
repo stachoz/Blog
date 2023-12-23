@@ -1,8 +1,9 @@
-DROP TABLE if EXISTS application_user;
+DROP TABLE if exists user_roles;
 DROP TABLE if EXISTS user_role;
-DROP TABLE if EXISTS post;
 DROP TABLE IF EXISTS comment;
 DROP TABLE IF EXISTS report;
+DROP TABLE if EXISTS post;
+DROP TABLE if EXISTS application_user;
 
 
 CREATE TABLE application_user
@@ -35,7 +36,7 @@ CREATE TABLE post
     content VARCHAR(2000) NOT NULL,
     time_added TIMESTAMP,
     author_id BIGINT NOT NULL,
-    FOREIGN KEY (author_id) REFERENCES application_user(id)
+    FOREIGN KEY (author_id) REFERENCES application_user(id) on delete cascade
 );
 
 CREATE TABLE comment

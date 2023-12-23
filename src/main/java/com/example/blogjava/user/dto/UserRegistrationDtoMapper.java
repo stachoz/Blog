@@ -19,14 +19,11 @@ public class UserRegistrationDtoMapper {
     }
 
     public User map(UserRegistrationDto dto){
-        final String USER_ROE = "USER";
         User user = new User();
         user.setEmail(dto.getEmail());
         user.setUsername(dto.getUsername());
         String encodedPassword = passwordEncoder.encode(dto.getPassword());
         user.setPassword(encodedPassword);
-        UserRole userRole = userRoleRepository.findUserRoleByRoleName(USER_ROE).orElseThrow(() -> new NoSuchElementException());
-        user.getUserRoles().add(userRole);
         return user;
     }
 }

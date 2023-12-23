@@ -1,10 +1,8 @@
-INSERT INTO
-    application_user(username, email, password)
-VALUES
-    ('admin', 'admin@example.com', '{noop}admin'),
-    ('user', 'user@example.com', '{noop}user');
-
-
+# INSERT INTO
+#     application_user(username, email, password)
+# VALUES
+#     ('admin', 'admin@example.com', '{noop}admin'),
+#     ('user', 'user@example.com', '{noop}user');
 INSERT INTO
     user_role(role_name)
 VALUES

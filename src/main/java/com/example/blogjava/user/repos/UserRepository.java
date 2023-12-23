@@ -1,6 +1,7 @@
 package com.example.blogjava.user.repos;
 
 import com.example.blogjava.user.User;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -14,5 +15,12 @@ public interface UserRepository extends CrudRepository<User, Long>{
     boolean existsUserByEmail(String email);
     boolean existsUserByUsername(String username);
     void deleteByUsername(String username);
+
+    /**
+     * Check if table has any content
+     * @return 1 if first row exists otherwise 0
+     */
+    @Query(nativeQuery = true, value = "select exists(select 1 from application_user limit 1)")
+    Long hasAnyRows();
 
 }

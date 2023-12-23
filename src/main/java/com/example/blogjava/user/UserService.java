@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.management.relation.Role;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -25,6 +26,7 @@ public class UserService {
     private final String USER_ROLE = "USER";
     private final String BLOCKED_USER_ROLE = "BLOCKED_USER";
     private final String ADMIN_AUTHORITY = "ROLE_ADMIN";
+    private final String ADMIN_ROLE = "ADMIN";
 
     public UserService(UserRepository userRepository,UserRoleRepository userRoleRepository, UserRegistrationDtoMapper userRegistrationDtoMapper){
         this.userRepository = userRepository;
@@ -62,16 +64,20 @@ public class UserService {
         }
     }
 
+    // #TODO redirect user after registration to login page
     @Transactional
     public void registerUser(UserRegistrationDto dto){
         User user = userRegistrationDtoMapper.map(dto);
-        try{
-            userRepository.save(user);
-        } catch (ConstraintViolationException cve){
-            Set<ConstraintViolation<?>> constraintViolations = cve.getConstraintViolations();
-            System.err.println("Constraint violations for object " + user);
-            constraintViolations.forEach(System.err::println);
+        if(userRepository.hasAnyRows() == 0){
+            UserRole adminRole = userRoleRepository.findUserRoleByRoleName(ADMIN_ROLE)
+                    .orElse(new UserRole(ADMIN_ROLE));
+            user.setUserRoles(Set.of(adminRole));
+        } else {
+            UserRole userRole = userRoleRepository.findUserRoleByRoleName(USER_ROLE)
+                    .orElse(new UserRole(USER_ROLE));
+            user.setUserRoles(Set.of(userRole));
         }
+        userRepository.save(user);
     }
     @Transactional
     public boolean isEmailUnique(String email){

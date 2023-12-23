@@ -15,12 +15,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 public class RegistrationController {
     private final UserService userService;
-    private final UserRepository userRepository;
 
-    public RegistrationController(UserService userService,
-                                  UserRepository userRepository){
+    public RegistrationController(UserService userService){
         this.userService = userService;
-        this.userRepository = userRepository;
     }
 
     @GetMapping("/register")
@@ -47,6 +44,6 @@ public class RegistrationController {
         }
         redirectAttributes.addFlashAttribute("register successful", "you have registered successfully");
         userService.registerUser(userRegistrationDto);
-        return "redirect:/";
+        return "redirect:/login";
     }
 }
