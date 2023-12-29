@@ -6,32 +6,47 @@
 </head>
 <body>
     <header th:replace="fragments :: header"></header>
-    <section class="content">
-        <h3 class="message" sec:authorize="hasRole('ROLE_BLOCKED_USER')">You are blocked. You can not add posts and comment them</h3>
-        <h4 sec:authorize="!hasRole('ROLE_BLOCKED_USER')">
-            <a sec:authorize="isAuthenticated()" th:href="@{/post/add}">Add post</a>
-        </h4>
-        <div th:if="${posts.isEmpty()}">
-            <p>There is no content. Sign up and write something.</p>
-        </div>
-        <div th:each="post : ${posts}">
-            <div class="post-info">
-                <a th:href="@{/profile(username=${post.author})}">
-                    <p th:text="${post.author}">Username</p>
-                </a>
-                <p th:text="${#dates.format(post.timeAdded, 'dd-MM-yyyy HH:mm')}"></p>
+
+        <div class="grid-con">
+            <div class="side-panel">
+                <ul>
+                    <li>BTC: 123</li>
+                    <li>BTC: 123</li>
+                    <li>BTC: 123</li>
+                </ul>
             </div>
-            <a th:text="${post.title}"></a>
-            <p th:text="${post.content}"></p>
-            <a th:href="@{/post/{id}(id = ${post.id})}">View details</a>
-            <a sec:authorize="hasRole('ADMIN')" th:href="@{/post/{id}/delete(id = ${post.id})}">Delete</a>
-            <hr>
+            <div class="grid-item">
+                <section>
+                    <h3 class="message" sec:authorize="hasRole('ROLE_BLOCKED_USER')">You are blocked. You can not add posts and comment them</h3>
+                    <h4 sec:authorize="!hasRole('ROLE_BLOCKED_USER')">
+                        <a sec:authorize="isAuthenticated()" th:href="@{/post/add}">Add post</a>
+                    </h4>
+                    <div th:if="${posts.isEmpty()}">
+                        <p>There is no content. Sign up and write something.</p>
+                    </div>
+                    <div th:each="post : ${posts}">
+                        <div class="post-info">
+                            <a th:href="@{/profile(username=${post.author})}">
+                                <p th:text="${post.author}">Username</p>
+                            </a>
+                            <p th:text="${#dates.format(post.timeAdded, 'dd-MM-yyyy HH:mm')}"></p>
+                        </div>
+                        <a th:text="${post.title}"></a>
+                        <p th:text="${post.content}"></p>
+                        <a th:href="@{/post/{id}(id = ${post.id})}">View details</a>
+                        <a sec:authorize="hasRole('ADMIN')" th:href="@{/post/{id}/delete(id = ${post.id})}">Delete</a>
+                        <hr>
+                    </div>
+                    <div class="page-navigation">
+                        <a th:if="${current_page > 0}" th:href="@{/previous_page}">Previous Page</a>
+                        <a th:unless="${isLast}" th:href="@{/next_page}">Next Page</a>
+                    </div>
+                </section>
+            </div>
+            <div class="grid-item">
+            </div>
         </div>
-        <div class="page-navigation">
-            <a th:if="${current_page > 0}" th:href="@{/previous_page}">Previous Page</a>
-            <a th:unless="${isLast}" th:href="@{/next_page}">Next Page</a>
-        </div>
-    </section>
+
     <footer th:replace="fragments :: footer"></footer>
 </body>
 </html>

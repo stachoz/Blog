@@ -19,6 +19,18 @@ table, th, td{
     font-size: 1.5rem;
     padding-bottom: 5vh;
 }
+/*------INDEX-------*/
+
+.grid-con {
+    display: grid;
+    grid-template-columns: 20% 60% 20%;
+    padding-top: 1%;
+}
+
+.side-panel{
+    padding-left: 2%;
+}
+
 
 .content {
     width: 50%;
