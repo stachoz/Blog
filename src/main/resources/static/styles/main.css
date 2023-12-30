@@ -38,6 +38,11 @@ table, th, td{
 
 }
 
+.add-coin-con form p {
+    font-size: 0.7rem;
+    color: red;
+}
+
 .add-coin-con {
     width: 45%;
     padding-bottom: 3%;
@@ -51,6 +56,8 @@ table, th, td{
     width: 50%;
     margin: auto;
 }
+
+/*---------Post-------------*/
 
 .add-post-form {
     display: flex;

@@ -12,6 +12,7 @@
                     <form method="post" th:action="@{/add-coin}" th:object="${coin}">
                         <label for="coin-input" class="form-label">Add cryptocurrency</label>
                         <input th:field="*{name}" class="form-control form-control-sm" type="text" placeholder="DOGE" aria-label=".form-control-sm example" id="coin-input">
+                        <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}">lorem ipsum</p>
                         <button type="submit" class="btn btn-primary btn-sm">Submit</button>
                     </form>
                 </div>
