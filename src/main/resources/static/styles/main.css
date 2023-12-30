@@ -28,9 +28,24 @@ table, th, td{
 }
 
 .side-panel{
-    padding-left: 2%;
+    padding-top: 10%;
+    padding-left: 10%;
 }
 
+.side-panel ul {
+    list-style-type: none;
+    padding-top: 3%;
+
+}
+
+.add-coin-con {
+    width: 45%;
+    padding-bottom: 3%;
+}
+
+.add-coin-con form button {
+    margin-top: 4%;
+}
 
 .content {
     width: 50%;
