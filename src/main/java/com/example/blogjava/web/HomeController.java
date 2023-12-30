@@ -1,6 +1,7 @@
 package com.example.blogjava.web;
 
 import com.example.blogjava.crypto.CoinDto;
+import com.example.blogjava.crypto.CoinApiService;
 import com.example.blogjava.crypto.CryptoService;
 import com.example.blogjava.post.PostService;
 import com.example.blogjava.post.dto.PostDto;
@@ -17,11 +18,13 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class HomeController {
     private final PostService postService;
+    private final CoinApiService coinApiService;
     private final CryptoService cryptoService;
     int currentPage = 0;
     int pageSize = 3;
-    public HomeController(PostService postService, CryptoService cryptoService){
+    public HomeController(PostService postService, CoinApiService coinApiService, CryptoService cryptoService){
         this.postService = postService;
+        this.coinApiService = coinApiService;
         this.cryptoService = cryptoService;
     }
 
@@ -31,17 +34,17 @@ public class HomeController {
         model.addAttribute("coin", new CoinDto());
         model.addAttribute("posts", pageOfPosts);
         model.addAttribute("current_page", currentPage);
+        model.addAttribute("btcPrize", cryptoService.getBtcPrize());
         return "index";
     }
     @PostMapping("/add-coin")
     public String addCoin(@Valid @ModelAttribute("coin") CoinDto coinDto, BindingResult bindingResult, Model model){
         if(bindingResult.hasErrors()){
-            System.out.println(bindingResult.getAllErrors());
             Page<PostDto> pr = getPostPage(model);
             model.addAttribute("posts", pr);
             return "index";
         }
-//        if(cryptoService.isSupportedByApi(coinDto.getName())) System.out.println("is supported");
+//        if(coinApiService.isSupportedByApi(coinDto.getName())) System.out.println("is supported");
         return "redirect:/";
     }
 
