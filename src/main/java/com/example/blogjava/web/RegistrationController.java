@@ -2,7 +2,6 @@ package com.example.blogjava.web;
 
 import com.example.blogjava.user.UserService;
 import com.example.blogjava.user.dto.UserRegistrationDto;
-import com.example.blogjava.user.repos.UserRepository;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

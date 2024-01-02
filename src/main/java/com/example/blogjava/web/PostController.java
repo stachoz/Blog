@@ -26,12 +26,12 @@ public class PostController {
     @GetMapping("/add")
     String addPostForm(Model model){
          model.addAttribute("post", new PostFormDto());
-         return "add-post-form";
+         return "post/add-post-form";
     }
     @PostMapping("/save")
     String savePost(@Valid @ModelAttribute("post") PostFormDto postFormDto, BindingResult bindingResult){
         if (bindingResult.hasErrors()){
-            return "add-post-form";
+            return "post/add-post-form";
         }
         postService.savePost(postFormDto);
         return "redirect:/";
@@ -44,7 +44,7 @@ public class PostController {
         model.addAttribute("post", postById);
         model.addAttribute("commentForm", new CommentFormDto());
         model.addAttribute("comments", postComments);
-        return "post";
+        return "post/post";
     }
 
     @PostMapping("/{postId}/saveComment")
@@ -67,7 +67,7 @@ public class PostController {
     String reportPost(@PathVariable Long postId, Model model){
         model.addAttribute("reportForm", new ReportFormDto());
         model.addAttribute("reportedPostId", postId);
-        return "post-report";
+        return "post/post-report";
     }
 
     @PostMapping("{postId}/saveReport")

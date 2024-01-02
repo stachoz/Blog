@@ -9,7 +9,7 @@
         <div class="grid-con">
             <div class="side-panel">
 <!--                <h5>YOUR COINS:</h5>-->
-                <div class="add-coin-con">
+                <div sec:authorize="isAuthenticated()" class="add-coin-con">
                     <form method="post" th:action="@{/add-coin}" th:object="${coin}">
                         <label for="coin-input" class="form-label">Add cryptocurrency</label>
                         <input th:field="*{name}" class="form-control form-control-sm" type="text" placeholder="COIN SYMBOL" aria-label=".form-control-sm example" id="coin-input">

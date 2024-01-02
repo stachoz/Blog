@@ -1,18 +1,21 @@
 package com.example.blogjava.web;
 
-import com.example.blogjava.crypto.CoinDto;
 import com.example.blogjava.crypto.CoinApiService;
+import com.example.blogjava.crypto.CoinDto;
 import com.example.blogjava.crypto.CoinService;
 import com.example.blogjava.post.PostService;
 import com.example.blogjava.post.dto.PostDto;
 import jakarta.validation.Valid;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import java.util.HashMap;
 
 
 @Controller
@@ -34,7 +37,8 @@ public class HomeController {
         model.addAttribute("coin", new CoinDto());
         model.addAttribute("posts", pageOfPosts);
         model.addAttribute("current_page", currentPage);
-        model.addAttribute("coinsPrices", coinService.getBaseCoinPrices());
+//        model.addAttribute("coinsPrices", coinService.getBaseCoinPrices());
+        model.addAttribute("coinsPrices", new HashMap<>());
         return "index";
     }
     @PostMapping("/add-coin")
