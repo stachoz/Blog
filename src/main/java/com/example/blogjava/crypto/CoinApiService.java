@@ -2,8 +2,6 @@ package com.example.blogjava.crypto;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.tomcat.util.json.JSONParser;
-import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -21,7 +19,6 @@ public class CoinApiService {
     private static final String API_URL = "https://rest.coinapi.io/v1/exchangerate/";
     private static final String API_KEY = System.getenv("COIN_API_KEY");
 
-
     public Optional<HashMap<String, String>> getCoinJSON(String coinSymbol){
         String currency = "USD";
         String url = createUrl(coinSymbol, currency);
@@ -29,7 +26,6 @@ public class CoinApiService {
             ObjectMapper objectMapper = new ObjectMapper();
             HttpResponse<String> response = getResponse(url);
             String jsonString = response.body();
-            JSONParser jsonParser = new JSONParser(jsonString);
             HashMap<String, String> result = objectMapper.readValue(jsonString, new TypeReference<HashMap<String, String>>() {
             });
             return Optional.of(result);
@@ -45,11 +41,13 @@ public class CoinApiService {
 
     public boolean isSupportedByApi(String coinSymbol){
         String currency = "PLN";
+        final int successfulCodeStart = 200;
+        final int redirectCodeStart = 300;
         String url = createUrl(coinSymbol, currency);
         try {
             HttpResponse<String> response = getResponse(url);
             int statusCode = response.statusCode();
-            if(statusCode >= 200 && statusCode < 300){
+            if(statusCode >= successfulCodeStart && statusCode < redirectCodeStart){
                 return true;
             }
         } catch (Exception e) {
@@ -59,10 +57,10 @@ public class CoinApiService {
     }
 
     private HttpResponse<String> getResponse(String url) throws URISyntaxException, IOException, InterruptedException {
-        final String HEADER = "X-CoinAPI-Key";
+        final String header = "X-CoinAPI-Key";
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(new URI(url))
-                .header(HEADER, API_KEY)
+                .header(header, API_KEY)
                 .GET()
                 .build();
         HttpClient client = HttpClient.newHttpClient();

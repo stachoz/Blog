@@ -2,7 +2,7 @@ package com.example.blogjava.web;
 
 import com.example.blogjava.crypto.CoinDto;
 import com.example.blogjava.crypto.CoinApiService;
-import com.example.blogjava.crypto.CryptoService;
+import com.example.blogjava.crypto.CoinService;
 import com.example.blogjava.post.PostService;
 import com.example.blogjava.post.dto.PostDto;
 import jakarta.validation.Valid;
@@ -19,13 +19,13 @@ import org.springframework.web.bind.annotation.*;
 public class HomeController {
     private final PostService postService;
     private final CoinApiService coinApiService;
-    private final CryptoService cryptoService;
+    private final CoinService coinService;
     int currentPage = 0;
     int pageSize = 3;
-    public HomeController(PostService postService, CoinApiService coinApiService, CryptoService cryptoService){
+    public HomeController(PostService postService, CoinApiService coinApiService, CoinService coinService){
         this.postService = postService;
         this.coinApiService = coinApiService;
-        this.cryptoService = cryptoService;
+        this.coinService = coinService;
     }
 
     @GetMapping("/")
@@ -34,7 +34,7 @@ public class HomeController {
         model.addAttribute("coin", new CoinDto());
         model.addAttribute("posts", pageOfPosts);
         model.addAttribute("current_page", currentPage);
-        model.addAttribute("btcPrize", cryptoService.getBtcPrize());
+        model.addAttribute("coinsPrices", coinService.getBaseCoinPrices());
         return "index";
     }
     @PostMapping("/add-coin")
@@ -44,7 +44,6 @@ public class HomeController {
             model.addAttribute("posts", pr);
             return "index";
         }
-//        if(coinApiService.isSupportedByApi(coinDto.getName())) System.out.println("is supported");
         return "redirect:/";
     }
 
@@ -60,7 +59,6 @@ public class HomeController {
         return "redirect:/";
     }
 
-    @NotNull
     private Page<PostDto> getPostPage(Model model) {
         PageRequest pr = PageRequest.of(currentPage, pageSize);
         Page<PostDto> pageOfPosts = postService.getPageOfPosts(pr);

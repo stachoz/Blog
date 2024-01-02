@@ -8,6 +8,7 @@
     <header th:replace="fragments :: header"></header>
         <div class="grid-con">
             <div class="side-panel">
+<!--                <h5>YOUR COINS:</h5>-->
                 <div class="add-coin-con">
                     <form method="post" th:action="@{/add-coin}" th:object="${coin}">
                         <label for="coin-input" class="form-label">Add cryptocurrency</label>
@@ -16,10 +17,10 @@
                         <button type="submit" class="btn btn-primary btn-sm">Submit</button>
                     </form>
                 </div>
-                <ul>
-                    <li th:text="|BTC: ${btcPrize}|">BTC: 123</li>
-                    <li th:text="|BTC: ${btcPrize}|">BTC: 123</li>
-                    <li th:text="|BTC: ${btcPrize}|">BTC: 123</li>
+                <h5>TOP COINS:</h5>
+                <ul class="coin-list">
+                    <li th:unless="${coinsPrices.isEmpty()}" th:each="coinPrice : ${coinsPrices}" th:text="|${coinPrice.getKey()}: ${#numbers.formatDecimal(coinPrice.getValue(), 1, 5)}$|">BTC: 123</li>
+                    <p th:if="${coinsPrices.isEmpty()}">Coin list is not available</p>
                 </ul>
             </div>
             <div class="grid-item">
