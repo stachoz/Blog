@@ -18,10 +18,10 @@
                     </form>
                 </div>
                 <h5>TOP COINS:</h5>
-                <ul class="coin-list">
-                    <li th:unless="${coinsPrices.isEmpty()}" th:each="coinPrice : ${coinsPrices}" th:text="|${coinPrice.getKey()}: ${#numbers.formatDecimal(coinPrice.getValue(), 1, 5)}$|">BTC: 123</li>
-                    <p th:if="${coinsPrices.isEmpty()}">Coin list is not available</p>
+                <ul class="coin-list" th:if="${!coinsPrices.isEmpty()}">
+                    <li th:each="coinPrice : ${coinsPrices}" th:text="|${coinPrice.getKey()}: ${#numbers.formatDecimal(coinPrice.getValue(), 1, 5)}$|">BTC: 123</li>
                 </ul>
+                <p th:if="${coinsPrices.isEmpty()}">Coin list is not available</p>
             </div>
             <div class="grid-item">
                 <section>

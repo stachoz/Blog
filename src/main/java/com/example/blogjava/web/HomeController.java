@@ -35,17 +35,13 @@ public class HomeController {
     public String posts(Model model){
         Page<PostDto> pageOfPosts = getPostPage(model);
         model.addAttribute("coin", new CoinDto());
-        model.addAttribute("posts", pageOfPosts);
-        model.addAttribute("current_page", currentPage);
-//        model.addAttribute("coinsPrices", coinService.getBaseCoinPrices());
-        model.addAttribute("coinsPrices", new HashMap<>());
+        loadHomeData(model);
         return "index";
     }
     @PostMapping("/add-coin")
     public String addCoin(@Valid @ModelAttribute("coin") CoinDto coinDto, BindingResult bindingResult, Model model){
         if(bindingResult.hasErrors()){
-            Page<PostDto> pr = getPostPage(model);
-            model.addAttribute("posts", pr);
+            loadHomeData(model);
             return "index";
         }
         return "redirect:/";
@@ -72,4 +68,10 @@ public class HomeController {
         return pageOfPosts;
     }
 
+    private void loadHomeData(Model model){
+        Page<PostDto> pr = getPostPage(model);
+        model.addAttribute("posts", pr);
+        model.addAttribute("current_page", currentPage);
+        model.addAttribute("coinsPrices", coinService.getBaseCoinPrices());
+    }
 }

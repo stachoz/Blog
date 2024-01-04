@@ -1,11 +1,14 @@
 package com.example.blogjava.crypto;
 
+import com.example.blogjava.custom_validators.SupportedByCoinApi;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 public class CoinDto {
     @NotBlank(message = "can't be empty")
-    @Max(value = 10, message = "too long value")
+    @Size(max = 10, message = "too long value (max 10)")
+    @SupportedByCoinApi
     private String name;
 
     public CoinDto(String name) {
