@@ -17,9 +17,11 @@ mvn spring-boot:run
 - Delete posts
 - Delete, block, unblock users
 - Manage posts' reports
+- Display base coins prices
 
 ### Logged in user
 - create, report, comment posts
+- add own coins
 
 ### Anonymous users
 - read posts
