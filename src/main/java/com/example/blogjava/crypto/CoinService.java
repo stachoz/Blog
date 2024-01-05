@@ -1,54 +1,82 @@
 package com.example.blogjava.crypto;
 
+import com.example.blogjava.user.User;
+import com.example.blogjava.user.repos.UserRepository;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class CoinService {
     private final CoinApiService coinApiService;
     private final CoinRepository coinRepository;
+    private final UserRepository userRepository;
 
-    public CoinService(CoinApiService coinApiService, CoinRepository coinRepository) {
+    public CoinService(CoinApiService coinApiService, CoinRepository coinRepository,
+                       UserRepository userRepository) {
         this.coinApiService = coinApiService;
         this.coinRepository = coinRepository;
+        this.userRepository = userRepository;
     }
 
-
-    /**
-     * @return HashMap<String, BigDecimal>, key - coin name, value - coin price
-     * there is possible exception because of api requests limitations
-     */
     public HashMap<String,BigDecimal> getBaseCoinPrices(){
         HashMap<String, BigDecimal> coinPrice = new LinkedHashMap<>();
-        int minutes = 10;
         for (BaseCoins baseCoins : BaseCoins.values()) {
-            try{
-                String coinName = baseCoins.name();
-                Coin coin = coinRepository.findCoinByName(coinName)
-                                .orElseGet(() -> coinRepository.save(new Coin(coinName, getCoinPrice(coinName))));
-                BigDecimal currentPrice;
-                if(coin.getDateTime().isAfter(LocalDateTime.now().minusMinutes(minutes))) currentPrice = coin.getCurrentPrice();
-                else{
-                    currentPrice = getCoinPrice(coinName);
-                    coin.setCurrentPrice(currentPrice);
-                    coinRepository.save(coin);
-                }
-                coinPrice.put(coinName, currentPrice);
-            } catch (Exception e){
-                e.printStackTrace();
-            }
+            String coinName = baseCoins.name();
+            coinPrice.put(coinName, updateCoinPrice(coinName).getCurrentPrice());
         }
         return coinPrice;
     }
 
-    private BigDecimal getCoinPrice(String coinName){
+    public void addNewCoin(String coinName){
+        System.out.println("New coin supported by Api: " + coinName);
+        Coin coin = updateCoinPrice(coinName);
+        coin.addUser(getCurrentUser());
+        coinRepository.save(coin);
+    }
+
+    private BigDecimal getCoinPriceFromApi(String coinName){
         Optional<HashMap<String, String>> coinJSON = coinApiService.getCoinJSON(coinName);
         HashMap<String, String> coinData = coinJSON.orElseThrow(() -> new RuntimeException("empty coin Json"));
         return new BigDecimal(coinData.get("rate"));
+    }
+
+    public Map<String, BigDecimal> getUserCoins(){
+        Map<String, BigDecimal> userCoinsPrice = new HashMap<>();
+        if(!SecurityContextHolder.getContext().getAuthentication().getPrincipal().equals("anonymousUser")){
+            User user = getCurrentUser();
+            userCoinsPrice =  user.getUserCoins().stream().collect(Collectors.toMap(
+                    Coin::getName, coin -> updateCoinPrice(coin.getName()).getCurrentPrice()));
+        }
+        return userCoinsPrice;
+    }
+
+
+    /**
+     * This function updates a coin price loading it from external CoinApi based on reducing requests to CoinApi policy.
+     * reducing api requests policy:
+     * If price was updated less than 10 minutes ago nothing happens, otherwise get current price from api
+     * @param coinName - currency cod e.g. BTC (Bitcoin)
+     * @return currency price.
+     */
+    private Coin updateCoinPrice(String coinName){
+        BigDecimal currentPrice;
+        int minutes = 10;
+        Coin coin = coinRepository.findCoinByName(coinName)
+                .orElseGet(() -> coinRepository.save(new Coin(coinName, getCoinPriceFromApi(coinName))));
+        if(!coin.getDateTime().isAfter(LocalDateTime.now().minusMinutes(minutes))){
+            currentPrice = getCoinPriceFromApi(coinName);
+            coin.setCurrentPrice(currentPrice);
+        }
+        return coinRepository.save(coin);
+    }
+
+    private User getCurrentUser(){
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        return  userRepository.findByUsername(username).orElseThrow(() -> new NoSuchElementException("cannot get user from db"));
     }
 }

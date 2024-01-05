@@ -1,6 +1,7 @@
 package com.example.blogjava.custom_validators;
 
 import com.example.blogjava.crypto.CoinApiService;
+import com.example.blogjava.crypto.CoinRepository;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import org.springframework.stereotype.Service;
@@ -8,9 +9,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class SupportedByCoinApiValidator implements ConstraintValidator<SupportedByCoinApi, String> {
     private final CoinApiService apiService;
+    private final CoinRepository coinRepository;
 
-    public SupportedByCoinApiValidator(CoinApiService apiService) {
+    public SupportedByCoinApiValidator(CoinApiService apiService, CoinRepository coinRepository) {
         this.apiService = apiService;
+        this.coinRepository = coinRepository;
     }
 
     @Override
@@ -20,6 +23,6 @@ public class SupportedByCoinApiValidator implements ConstraintValidator<Supporte
 
     @Override
     public boolean isValid(String s, ConstraintValidatorContext constraintValidatorContext) {
-        return apiService.isSupportedByApi(s);
+        return coinRepository.existsByName(s) || apiService.isSupportedByApi(s);
     }
 }

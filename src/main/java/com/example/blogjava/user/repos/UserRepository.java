@@ -27,4 +27,6 @@ public interface UserRepository extends CrudRepository<User, Long>{
     @Query(nativeQuery = true, value = "select count(p.id) from application_user u join post p on u.id = p.author_id where u.username = :u")
     int countUserPosts(@Param("u") String username);
 
+
+
 }

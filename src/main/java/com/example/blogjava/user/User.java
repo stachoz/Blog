@@ -1,5 +1,6 @@
 package com.example.blogjava.user;
 
+import com.example.blogjava.crypto.Coin;
 import com.example.blogjava.post.Post;
 import com.example.blogjava.post.post_comment.Comment;
 import jakarta.persistence.*;
@@ -41,6 +42,15 @@ public class User {
     @OneToMany(mappedBy = "user",
     cascade = CascadeType.REMOVE)
     private Set<Comment> comments = new HashSet<>();
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinTable(
+            name = "user_coins",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "coin_id")
+    )
+    private Set<Coin> userCoins = new HashSet<>();
+
     public Long getId() {
         return id;
     }
@@ -79,5 +89,9 @@ public class User {
 
     public void setUserRoles(Set<UserRole> userRoles) {
         this.userRoles = userRoles;
+    }
+
+    public Set<Coin> getUserCoins(){
+        return userCoins;
     }
 }
