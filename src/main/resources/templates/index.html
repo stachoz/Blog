@@ -51,8 +51,14 @@
                         </div>
                         <a th:text="${post.title}"></a>
                         <p th:text="${post.content}"></p>
-                        <a th:href="@{/post/{id}(id = ${post.id})}">View details</a>
-                        <a sec:authorize="hasRole('ADMIN')" th:href="@{/post/{id}/delete(id = ${post.id})}">Delete</a>
+                        <div class="post-interact">
+                            <div sec:authorize="isAuthenticated()">
+                                <i class="fa-solid fa-thumbs-up icon"></i>
+                                <i class="fa-solid fa-thumbs-down icon"></i>
+                            </div>
+                            <a th:href="@{/post/{id}(id = ${post.id})}">View details</a>
+                            <a sec:authorize="hasRole('ADMIN')" th:href="@{/post/{id}/delete(id = ${post.id})}">Delete</a>
+                        </div>
                         <hr>
                     </div>
                     <div class="page-navigation">

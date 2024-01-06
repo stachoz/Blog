@@ -56,6 +56,21 @@ table, th, td{
     margin: auto;
 }
 
+.icon {
+    font-size: 1.2em;
+    margin: 2px;
+    cursor: pointer;
+}
+
+.fa-thumbs-up:hover {
+    color: #27a644;
+}
+
+.fa-thumbs-down:hover{
+    color: #dc3545;
+}
+
+
 /*---------Post-------------*/
 
 .add-post-form {
@@ -108,5 +123,13 @@ table, th, td{
 .profile-content {
     width: 90%;
     margin: auto;
+}
+
+.post-interact {
+    display: flex;
+}
+
+.post-interact a {
+    margin-left: 0.5em;
 }
 
