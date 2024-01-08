@@ -12,12 +12,12 @@
             <div class="post">
                 <div class="post-info">
                     <a th:href="@{/profile(username=${post.author})}">
-                        <p th:text="${post.author}"></p>
+                        <p th:text="${post.author}">John</p>
                     </a>
-                    <p th:text="${#dates.format(post.timeAdded, 'dd-MM-yyyy HH:mm')}"></p>
+                    <p th:text="${#dates.format(post.timeAdded, 'dd-MM-yyyy HH:mm')}">08-01-2024 00:06</p>
                 </div>
-                <a th:text="${post.title}"></a>
-                <p th:text="${post.content}"></p>
+                <a th:text="${post.title}">test</a>
+                <p th:utext="${post.content}">lorem ipsum</p>
                 <a sec:authorize="isAuthenticated() and !hasRole('ROLE_BLOCKED_USER')" th:href="@{{postId}/report(postId = ${post.id})}">Report</a>
                 <hr>
             </div>
