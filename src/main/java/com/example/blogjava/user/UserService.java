@@ -77,8 +77,8 @@ public class UserService {
                     .orElse(new UserRole(USER_ROLE));
             user.setUserRoles(Set.of(userRole));
         }
-//        emailService.sendEmail(dto.getEmail(), "register", "hello test email");
-
+        
+        emailService.sendEmail(dto.getEmail(), "register", emailService.getWelcomeMessage(user.getUsername()));
         userRepository.save(user);
     }
     @Transactional

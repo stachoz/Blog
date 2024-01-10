@@ -20,8 +20,7 @@ CREATE TABLE user_role
     role_name VARCHAR(50) NOT NULL
 );
 
-CREATE TABLE user_roles
-(
+CREATE TABLE user_roles (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     user_id BIGINT NOT NUll,
     role_id BIGINT NOT NULL,

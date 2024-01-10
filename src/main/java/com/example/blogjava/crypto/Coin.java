@@ -1,14 +1,10 @@
 package com.example.blogjava.crypto;
 
-import com.example.blogjava.user.User;
-import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
-import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 public class Coin {
@@ -17,17 +13,9 @@ public class Coin {
     private Long id;
     private String name;
     private BigDecimal currentPrice;
-    @CreationTimestamp
+    @UpdateTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime dateTime;
-
-    @ManyToMany(mappedBy = "userCoins")
-    @Nullable
-    private Set<User> users;
-
-    public Set<User> getUsers() {
-        return users;
-    }
 
     public Coin(String name, BigDecimal currentPrice) {
         this.name = name;
@@ -35,17 +23,6 @@ public class Coin {
     }
 
     public Coin(){}
-
-    public void addUser(User user){
-        users.add(user);
-        user.getUserCoins().add(this);
-    }
-
-    @PreUpdate
-    public void preUpdate(){
-        this.dateTime = LocalDateTime.now();
-    }
-
     public Long getId() {
         return id;
     }

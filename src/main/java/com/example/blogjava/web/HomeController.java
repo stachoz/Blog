@@ -42,7 +42,7 @@ public class HomeController {
     }
 
     @GetMapping("/next_page")
-    public String nexPage(){
+    public String nextPage(){
         currentPage++;
         return "redirect:/";
     }

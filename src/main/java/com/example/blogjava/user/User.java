@@ -3,7 +3,6 @@ package com.example.blogjava.user;
 import com.example.blogjava.crypto.Coin;
 import com.example.blogjava.post.Post;
 import com.example.blogjava.post.post_comment.Comment;
-import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
@@ -50,13 +49,25 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "coin_id")
     )
-    @Nullable
-    private Set<Coin> userCoins = new HashSet<>();
+    private Set<Coin> coins = new HashSet<>();
+
 
     public User(String username, String email, String password) {
         this.username = username;
         this.email = email;
         this.password = password;
+    }
+
+    public Set<Coin> getCoins() {
+        return coins;
+    }
+
+    public void addCoin(Coin coin){
+        coins.add(coin);
+    }
+
+    public void setCoins(Set<Coin> coins) {
+        this.coins = coins;
     }
 
     public User(){};
@@ -100,13 +111,5 @@ public class User {
 
     public void setUserRoles(Set<UserRole> userRoles) {
         this.userRoles = userRoles;
-    }
-
-    public Set<Coin> getUserCoins(){
-        return userCoins;
-    }
-
-    public void setUserCoins(Set<Coin> userCoins) {
-        this.userCoins = userCoins;
     }
 }

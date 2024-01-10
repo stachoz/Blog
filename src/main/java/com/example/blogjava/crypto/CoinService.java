@@ -35,8 +35,9 @@ public class CoinService {
     public void addNewCoin(String coinName){
         System.out.println("New coin supported by Api: " + coinName);
         Coin coin = updateCoinPrice(coinName);
-        coin.addUser(getCurrentUser());
-        coinRepository.save(coin);
+        User currentUser = getCurrentUser();
+        currentUser.addCoin(coin);
+        userRepository.save(currentUser);
     }
 
     private BigDecimal getCoinPriceFromApi(String coinName){
@@ -49,7 +50,7 @@ public class CoinService {
         Map<String, BigDecimal> userCoinsPrice = new HashMap<>();
         if(!SecurityContextHolder.getContext().getAuthentication().getPrincipal().equals("anonymousUser")){
             User user = getCurrentUser();
-            userCoinsPrice =  user.getUserCoins().stream().collect(Collectors.toMap(
+            userCoinsPrice =  user.getCoins().stream().collect(Collectors.toMap(
                     Coin::getName, coin -> updateCoinPrice(coin.getName()).getCurrentPrice()));
         }
         return userCoinsPrice;

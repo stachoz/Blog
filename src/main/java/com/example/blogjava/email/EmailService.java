@@ -19,4 +19,8 @@ public class EmailService {
         message.setText(body);
         mailSender.send(message);
     }
+
+    public String getWelcomeMessage(String username){
+        return "Hello " + username + " you have your registered to JavaBlog";
+    }
 }
