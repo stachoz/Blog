@@ -64,7 +64,6 @@ public class UserService {
         }
     }
 
-    // #TODO redirect user after registration to login page
     @Transactional
     public void registerUser(UserRegistrationDto dto){
         User user = userRegistrationDtoMapper.map(dto);
@@ -77,7 +76,6 @@ public class UserService {
                     .orElse(new UserRole(USER_ROLE));
             user.setUserRoles(Set.of(userRole));
         }
-        
         emailService.sendEmail(dto.getEmail(), "register", emailService.getWelcomeMessage(user.getUsername()));
         userRepository.save(user);
     }
