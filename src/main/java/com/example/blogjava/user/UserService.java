@@ -1,17 +1,15 @@
 package com.example.blogjava.user;
 
+import com.example.blogjava.email.EmailService;
 import com.example.blogjava.user.dto.*;
 import com.example.blogjava.user.repos.UserRepository;
 import com.example.blogjava.user.repos.UserRoleRepository;
-import jakarta.validation.ConstraintViolation;
-import jakarta.validation.ConstraintViolationException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.management.relation.Role;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -22,15 +20,17 @@ import java.util.stream.Collectors;
 public class UserService {
     private final UserRepository userRepository;
     private final UserRoleRepository userRoleRepository;
+    private final EmailService emailService;
     private final UserRegistrationDtoMapper userRegistrationDtoMapper;
     private final String USER_ROLE = "USER";
     private final String BLOCKED_USER_ROLE = "BLOCKED_USER";
     private final String ADMIN_AUTHORITY = "ROLE_ADMIN";
     private final String ADMIN_ROLE = "ADMIN";
 
-    public UserService(UserRepository userRepository,UserRoleRepository userRoleRepository, UserRegistrationDtoMapper userRegistrationDtoMapper){
+    public UserService(UserRepository userRepository, UserRoleRepository userRoleRepository, EmailService emailService, UserRegistrationDtoMapper userRegistrationDtoMapper){
         this.userRepository = userRepository;
         this.userRoleRepository = userRoleRepository;
+        this.emailService = emailService;
         this.userRegistrationDtoMapper = userRegistrationDtoMapper;
     }
 
@@ -77,6 +77,8 @@ public class UserService {
                     .orElse(new UserRole(USER_ROLE));
             user.setUserRoles(Set.of(userRole));
         }
+//        emailService.sendEmail(dto.getEmail(), "register", "hello test email");
+
         userRepository.save(user);
     }
     @Transactional

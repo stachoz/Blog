@@ -57,3 +57,12 @@ CREATE TABLE report
     post_id BIGINT NOT NULL,
     FOREIGN KEY (post_id) REFERENCES post(id)
 );
+
+CREATE TABLE user_coins
+(
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    user_id BIGINT,
+    coin_id BIGINT,
+    FOREIGN KEY (user_id) REFERENCES application_user(id) on delete cascade,
+    FOREIGN KEY (coin_id) REFERENCES coin(id)
+);

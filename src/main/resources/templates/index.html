@@ -52,10 +52,10 @@
                         <a th:text="${post.title}"></a>
                         <p th:utext="${post.content}"></p>
                         <div class="post-interact">
-                            <div sec:authorize="isAuthenticated()">
-                                <i class="fa-solid fa-thumbs-up icon">Like</i>
-                                <i class="fa-solid fa-thumbs-down icon">Dislike</i>
-                            </div>
+<!--                            <div sec:authorize="isAuthenticated()">-->
+<!--                                <i class="fa-solid fa-thumbs-up icon"></i>-->
+<!--                                <i class="fa-solid fa-thumbs-down icon"></i>-->
+<!--                            </div>-->
                             <a th:href="@{/post/{id}(id = ${post.id})}">View details</a>
                             <a sec:authorize="hasRole('ADMIN')" th:href="@{/post/{id}/delete(id = ${post.id})}">Delete</a>
                         </div>

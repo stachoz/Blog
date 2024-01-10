@@ -6,24 +6,23 @@ import com.example.blogjava.user.repos.UserRoleRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.NoSuchElementException;
+import java.util.Set;
 
 @Service
 public class UserRegistrationDtoMapper {
-    private final UserRoleRepository userRoleRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public UserRegistrationDtoMapper(UserRoleRepository userRoleRepository, PasswordEncoder passwordEncoder) {
-        this.userRoleRepository = userRoleRepository;
+    public UserRegistrationDtoMapper(PasswordEncoder passwordEncoder) {
         this.passwordEncoder = passwordEncoder;
     }
 
     public User map(UserRegistrationDto dto){
-        User user = new User();
-        user.setEmail(dto.getEmail());
-        user.setUsername(dto.getUsername());
-        String encodedPassword = passwordEncoder.encode(dto.getPassword());
-        user.setPassword(encodedPassword);
-        return user;
+        return new User(
+                dto.getUsername(),
+                dto.getEmail(),
+                passwordEncoder.encode(dto.getPassword())
+        );
     }
 }

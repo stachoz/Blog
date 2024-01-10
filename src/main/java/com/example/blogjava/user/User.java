@@ -3,6 +3,7 @@ package com.example.blogjava.user;
 import com.example.blogjava.crypto.Coin;
 import com.example.blogjava.post.Post;
 import com.example.blogjava.post.post_comment.Comment;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
@@ -43,13 +44,23 @@ public class User {
     cascade = CascadeType.REMOVE)
     private Set<Comment> comments = new HashSet<>();
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinTable(
             name = "user_coins",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "coin_id")
     )
+    @Nullable
     private Set<Coin> userCoins = new HashSet<>();
+
+    public User(String username, String email, String password) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+    }
+
+    public User(){};
+
 
     public Long getId() {
         return id;
@@ -93,5 +104,9 @@ public class User {
 
     public Set<Coin> getUserCoins(){
         return userCoins;
+    }
+
+    public void setUserCoins(Set<Coin> userCoins) {
+        this.userCoins = userCoins;
     }
 }

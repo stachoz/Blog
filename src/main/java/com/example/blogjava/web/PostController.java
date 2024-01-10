@@ -19,6 +19,7 @@ import java.util.List;
 @RequestMapping("/post")
 public class PostController {
     private final PostService postService;
+    private final static String TINY_API_KEY = System.getenv("TINY_API_KEY");
     public PostController(PostService postService){
         this.postService = postService;
     }
@@ -26,6 +27,7 @@ public class PostController {
     @GetMapping("/add")
     String addPostForm(Model model){
          model.addAttribute("post", new PostFormDto());
+         model.addAttribute("tinyApiKey", TINY_API_KEY);
          return "post/add-post-form";
     }
     @PostMapping("/save")

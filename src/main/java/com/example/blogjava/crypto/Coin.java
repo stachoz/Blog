@@ -1,6 +1,7 @@
 package com.example.blogjava.crypto;
 
 import com.example.blogjava.user.User;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -20,8 +21,9 @@ public class Coin {
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime dateTime;
 
-    @ManyToMany(mappedBy = "userCoins", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    private Set<User> users = new HashSet<>();
+    @ManyToMany(mappedBy = "userCoins")
+    @Nullable
+    private Set<User> users;
 
     public Set<User> getUsers() {
         return users;
