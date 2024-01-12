@@ -22,7 +22,6 @@ public class AdminPageController {
     private final ReportService reportService;
     private final String USER_ROLE = "USER";
     private final String BLOCKED_USER_ROLE = "BLOCKED_USER";
-    private final String ADMIN_AUTHORITY = "ROLE_ADMIN";
 
     public AdminPageController(UserService userService, PostService postService, ReportService reportService){
         this.userService = userService;

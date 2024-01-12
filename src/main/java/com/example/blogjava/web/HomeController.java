@@ -13,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class HomeController {
@@ -53,6 +54,12 @@ public class HomeController {
         return "redirect:/";
     }
 
+    @GetMapping("/delete")
+    String deleteCoin(@RequestParam String coinName){
+        coinService.detachCoinFromUser(coinName);
+        return "redirect:/";
+    }
+
     private Page<PostDto> getPostPage(Model model) {
         PageRequest pr = PageRequest.of(currentPage, pageSize);
         Page<PostDto> pageOfPosts = postService.getPageOfPosts(pr);
@@ -67,6 +74,6 @@ public class HomeController {
         model.addAttribute("posts", pr);
         model.addAttribute("current_page", currentPage);
         model.addAttribute("coinsPrices", coinService.getBaseCoinPrices());
-        model.addAttribute("userCoinsPrices", coinService.getUserCoins());
+        model.addAttribute("userCoinsPrices", coinService.getUserCoinsPrice());
     }
 }

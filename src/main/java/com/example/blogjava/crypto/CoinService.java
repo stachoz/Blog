@@ -40,20 +40,29 @@ public class CoinService {
         userRepository.save(currentUser);
     }
 
+    public Map<String, BigDecimal> getUserCoinsPrice(){
+        return getUserCoinRecords().stream().collect(Collectors.toMap(
+                Coin::getName, coin -> updateCoinPrice(coin.getName()).getCurrentPrice()));
+    }
+
+    private Set<Coin> getUserCoinRecords() {
+        if(!SecurityContextHolder.getContext().getAuthentication().getPrincipal().equals("anonymousUser")) {
+            User user = getCurrentUser();
+            return user.getCoins();
+        }
+        return Set.of();
+    }
+
+    public void detachCoinFromUser(String coinName){
+        User currentUser = getCurrentUser();
+        currentUser.getCoins().removeIf(coin -> coin.getName().equals(coinName));
+        userRepository.save(currentUser);
+    }
+
     private BigDecimal getCoinPriceFromApi(String coinName){
         Optional<HashMap<String, String>> coinJSON = coinApiService.getCoinJSON(coinName);
         HashMap<String, String> coinData = coinJSON.orElseThrow(() -> new RuntimeException("empty coin Json"));
         return new BigDecimal(coinData.get("rate"));
-    }
-
-    public Map<String, BigDecimal> getUserCoins(){
-        Map<String, BigDecimal> userCoinsPrice = new HashMap<>();
-        if(!SecurityContextHolder.getContext().getAuthentication().getPrincipal().equals("anonymousUser")){
-            User user = getCurrentUser();
-            userCoinsPrice =  user.getCoins().stream().collect(Collectors.toMap(
-                    Coin::getName, coin -> updateCoinPrice(coin.getName()).getCurrentPrice()));
-        }
-        return userCoinsPrice;
     }
 
 

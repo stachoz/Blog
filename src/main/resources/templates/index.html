@@ -21,10 +21,17 @@
                         <h5>Your COINS:</h5>
                         <p th:if="${userCoinsPrices.isEmpty()}">You coin list is empty. Add them!</p>
                         <ul class="coin-list" th:if="${!userCoinsPrices.isEmpty()}">
-                            <li th:each="userCoinPrice : ${userCoinsPrices}" th:text="|${userCoinPrice.getKey()}: ${#numbers.formatDecimal(userCoinPrice.getValue(), 1, 5)}$|">BTC: 123</li>
+                            <div th:each="userCoinPrice : ${userCoinsPrices}">
+                                <li th:text="|${userCoinPrice.getKey()}: ${#numbers.formatDecimal(userCoinPrice.getValue(), 1, 5)}$|">
+                                </li>
+                                <a th:href="@{/delete(coinName=${userCoinPrice.getKey()})}" class="nav-link">
+                                    <i class="fa-solid fa-trash-can"></i>
+                                </a>
+                            </div>
                         </ul>
                     </div>
                 </div>
+
 
                 <h5>TOP COINS:</h5>
                 <p th:if="${coinsPrices.isEmpty()}">Coin list is not available</p>

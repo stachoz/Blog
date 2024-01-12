@@ -116,6 +116,10 @@ public class UserService {
         return userRepository.countUserPosts(currentUsername);
     }
 
+    public String getCurrentUser(){
+        return SecurityContextHolder.getContext().getAuthentication().getName();
+    }
+
     private boolean isCurrentUserAdmin(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return authentication.getAuthorities().stream()

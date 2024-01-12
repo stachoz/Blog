@@ -39,6 +39,12 @@ em {
 .coin-list {
     list-style-type: none;
     padding-top: 3%;
+    padding-right: 40%;
+}
+
+.coin-list div {
+    display: flex;
+    justify-content: space-between;
 }
 
 .add-coin-con form p {
@@ -53,6 +59,10 @@ em {
 
 .add-coin-con form button {
     margin-top: 4%;
+}
+
+.fa-trash-can:hover {
+    color: red;
 }
 
 .content {
@@ -123,17 +133,8 @@ em {
 .comments p {
     margin-bottom: 0.2rem;
 }
-
+/*------Profile---------*/
 .profile-content {
     width: 90%;
     margin: auto;
 }
-
-.post-interact {
-    display: flex;
-}
-
-.post-interact a {
-    margin-left: 0.5em;
-}
-
