@@ -12,6 +12,7 @@ public class Coin {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    @Column(name = "current_price")
     private BigDecimal currentPrice;
     @UpdateTimestamp
     @Temporal(TemporalType.TIMESTAMP)

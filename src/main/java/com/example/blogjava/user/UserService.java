@@ -93,10 +93,11 @@ public class UserService {
     public void blockUser(Long userId){
         if (isCurrentUserAdmin()){
             User user = userRepository.findById(userId).orElseThrow(NoSuchElementException::new);
-            UserRole userRole = userRoleRepository.findUserRoleByRoleName(USER_ROLE).orElseThrow(NoSuchElementException::new);
-            UserRole blockedUserRole = userRoleRepository.findUserRoleByRoleName(BLOCKED_USER_ROLE).orElseThrow(NoSuchElementException::new);
-            user.getUserRoles().remove(userRole);
+            Optional<UserRole> userRole = userRoleRepository.findUserRoleByRoleName(USER_ROLE);
+            UserRole blockedUserRole = userRoleRepository.findUserRoleByRoleName(BLOCKED_USER_ROLE).orElseGet(() -> new UserRole(BLOCKED_USER_ROLE));
+            userRole.ifPresent(role -> user.getUserRoles().remove(role));
             user.getUserRoles().add(blockedUserRole);
+            userRepository.save(user);
         }
     }
 

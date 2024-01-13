@@ -1,10 +1,11 @@
 DROP TABLE if exists user_roles;
 DROP TABLE if EXISTS user_role;
+DROP TABLE if EXISTS user_coins;
 DROP TABLE IF EXISTS comment;
 DROP TABLE IF EXISTS report;
 DROP TABLE if EXISTS post;
 DROP TABLE if EXISTS application_user;
-
+DROP TABLE if EXISTS coin;
 
 CREATE TABLE application_user
 (
@@ -14,18 +15,13 @@ CREATE TABLE application_user
     password VARCHAR(200) NOT NULL,
     UNIQUE (username, email)
 );
-CREATE TABLE user_role
+
+CREATE TABLE coin
 (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    role_name VARCHAR(50) NOT NULL
-);
-
-CREATE TABLE user_roles (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    user_id BIGINT NOT NUll,
-    role_id BIGINT NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES application_user(id) ON DELETE CASCADE,
-    FOREIGN KEY (role_id) REFERENCES user_role(id) ON DELETE CASCADE
+    name VARCHAR(30) unique default NULL,
+    current_price DECIMAL(20, 10) NOT NULL,
+    date_time TIMESTAMP
 );
 
 CREATE TABLE post
@@ -49,12 +45,14 @@ CREATE TABLE comment
     FOREIGN KEY (post_id) REFERENCES post(id)
 );
 
+
 CREATE TABLE report
 (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     cause VARCHAR(300),
     post_id BIGINT NOT NULL,
     FOREIGN KEY (post_id) REFERENCES post(id)
+
 );
 
 CREATE TABLE user_coins
@@ -63,5 +61,20 @@ CREATE TABLE user_coins
     user_id BIGINT,
     coin_id BIGINT,
     FOREIGN KEY (user_id) REFERENCES application_user(id) on delete cascade,
-    FOREIGN KEY (coin_id) REFERENCES coin(id)
+    FOREIGN KEY (coin_id) REFERENCES coin(id) on delete cascade
+);
+
+
+CREATE TABLE user_role
+(
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    role_name VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE user_roles (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    user_id BIGINT NOT NULL ,
+    role_id BIGINT NOT NULL ,
+    FOREIGN KEY (user_id) REFERENCES application_user(id),
+    FOREIGN KEY (role_id) REFERENCES user_role(id)
 );

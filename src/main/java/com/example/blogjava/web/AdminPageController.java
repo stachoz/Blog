@@ -59,14 +59,14 @@ public class AdminPageController {
     String blockUser(@RequestParam Long userId, RedirectAttributes redirectAttributes){
         userService.blockUser(userId);
         String username = userService.getUserUsername(userId);
-        redirectAttributes.addFlashAttribute("block message", username + " is blocked");
+        redirectAttributes.addFlashAttribute("blockMessage", username + " is blocked");
         return "redirect:/admin";
     }
 
     @GetMapping("/unblock-user")
     String unblockUser(@RequestParam String username, RedirectAttributes redirectAttributes){
         userService.unblockUser(username);
-        redirectAttributes.addFlashAttribute("unblock message", username + " is unblocked");
+        redirectAttributes.addFlashAttribute("unblockMessage", username + " is unblocked");
         return "redirect:/admin";
     }
     @GetMapping("/delete-report")
