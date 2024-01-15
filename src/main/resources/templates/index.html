@@ -14,6 +14,7 @@
                             <label for="coin-input" class="form-label">Add cryptocurrency</label>
                             <input th:field="*{name}" class="form-control form-control-sm" type="text" placeholder="COIN SYMBOL" aria-label=".form-control-sm example" id="coin-input">
                             <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}">lorem ipsum</p>
+                            <p th:errors="${coin}"></p>
                             <button type="submit" class="btn btn-primary btn-sm">Submit</button>
                         </form>
                     </div>
@@ -59,10 +60,6 @@
                         <a th:text="${post.title}"></a>
                         <p th:utext="${post.content}"></p>
                         <div class="post-interact">
-<!--                            <div sec:authorize="isAuthenticated()">-->
-<!--                                <i class="fa-solid fa-thumbs-up icon"></i>-->
-<!--                                <i class="fa-solid fa-thumbs-down icon"></i>-->
-<!--                            </div>-->
                             <a th:href="@{/post/{id}(id = ${post.id})}">View details</a>
                             <a sec:authorize="hasRole('ADMIN')" th:href="@{/post/{id}/delete(id = ${post.id})}">Delete</a>
                         </div>

@@ -12,7 +12,6 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -27,7 +26,7 @@ public class CoinApiService {
             ObjectMapper objectMapper = new ObjectMapper();
             HttpResponse<String> response = getResponse(url);
             String jsonString = response.body();
-            HashMap<String, String> result = objectMapper.readValue(jsonString, new TypeReference<HashMap<String, String>>() {
+            HashMap<String, String> result = objectMapper.readValue(jsonString, new TypeReference<>() {
             });
             return Optional.of(result);
         }
@@ -39,24 +38,6 @@ public class CoinApiService {
         }
         return Optional.empty();
     }
-
-    public boolean isSupportedByApi(String coinSymbol){
-        String currency = "PLN";
-        final int successfulCodeStart = 200;
-        final int redirectCodeStart = 300;
-        String url = createUrl(coinSymbol, currency);
-        try {
-            HttpResponse<String> response = getResponse(url);
-            int statusCode = response.statusCode();
-            if(statusCode >= successfulCodeStart && statusCode < redirectCodeStart){
-                return true;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
     private HttpResponse<String> getResponse(String url) throws URISyntaxException, IOException, InterruptedException {
         final String header = "X-CoinAPI-Key";
         HttpRequest request = HttpRequest.newBuilder()

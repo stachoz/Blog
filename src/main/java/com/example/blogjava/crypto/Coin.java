@@ -23,6 +23,10 @@ public class Coin {
         this.currentPrice = currentPrice;
     }
 
+    public Coin(String name){
+        this.name = name;
+    }
+
     public Coin(){}
     public Long getId() {
         return id;
