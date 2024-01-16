@@ -15,12 +15,14 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
     private final String ADMIN_ROLE = "ADMIN";
+    private final String USER_ROLE = "USER";
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(requests -> requests
                 .requestMatchers("/styles/**").permitAll()
                 .requestMatchers("/", "/next_page", "/previous_page").permitAll()
+                .requestMatchers(HttpMethod.POST, "/**").hasRole(USER_ROLE)
                 .requestMatchers("/admin/**").hasRole(ADMIN_ROLE)
                 .requestMatchers("/profile/**").permitAll()
                 .requestMatchers(HttpMethod.GET,"/post/*").permitAll()
