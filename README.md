@@ -13,16 +13,12 @@ mvn spring-boot:run
 
 ## Functionalities
 
-### Admin
-- Delete posts
-- Delete, block, unblock users
-- Manage posts' reports
-- Display base coins prices
-
-### Logged in user
-- create, report, comment posts
-- add own coins
-
-### Anonymous users
-- read posts
-- view profiles
+|                               | anonymous user | user | blocked user | admin |
+|-------------------------------|----------------|------|--------------|-------|
+| read posts                    | +              | +    | +            | +     |
+| view profiles                 | +              | +    | +            | +     |
+| add coins                     | -              | +    | -            | +     |
+| view base coin prices         | +              | +    | +            | +     |
+| create, report, comment posts | -              | +    | -            | +     |
+| delete post                   | -              | -    | -            | +     |
+| delete, block, unblock users  | -              | -    | -            | +     |
