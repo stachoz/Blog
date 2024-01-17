@@ -8,7 +8,7 @@
     <header th:replace="fragments :: header"></header>
         <div class="grid-con">
             <div class="side-panel">
-                <div sec:authorize="hasAnyRole('USER_ROLE')">
+                <div sec:authorize="hasAnyRole('USER', 'ADMIN')">
                     <div class="add-coin-con">
                         <form method="post" th:action="@{/add-coin}" th:object="${coin}">
                             <label for="coin-input" class="form-label">Add cryptocurrency</label>
