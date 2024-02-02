@@ -22,7 +22,7 @@ public class SecurityConfig {
         http.authorizeHttpRequests(requests -> requests
                 .requestMatchers("/styles/**").permitAll()
                 .requestMatchers("/", "/next_page", "/previous_page").permitAll()
-                .requestMatchers(HttpMethod.POST, "/**").hasRole(USER_ROLE)
+                .requestMatchers(HttpMethod.POST, "/**").hasAnyRole(USER_ROLE, ADMIN_ROLE)
                 .requestMatchers("/admin/**").hasRole(ADMIN_ROLE)
                 .requestMatchers("/profile/**").permitAll()
                 .requestMatchers(HttpMethod.GET,"/post/*").permitAll()
