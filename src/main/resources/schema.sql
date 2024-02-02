@@ -52,7 +52,6 @@ CREATE TABLE report
     cause VARCHAR(300),
     post_id BIGINT NOT NULL,
     FOREIGN KEY (post_id) REFERENCES post(id)
-
 );
 
 CREATE TABLE user_coins

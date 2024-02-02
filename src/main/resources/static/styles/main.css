@@ -76,6 +76,10 @@ em {
     margin: auto;
 }
 
+.post-content p {
+    margin-bottom: 0;
+}
+
 .icon {
     font-size: 1.2em;
     margin: 2px;
