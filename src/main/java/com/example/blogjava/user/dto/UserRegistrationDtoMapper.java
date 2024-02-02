@@ -22,7 +22,8 @@ public class UserRegistrationDtoMapper {
         return new User(
                 dto.getUsername(),
                 dto.getEmail(),
-                passwordEncoder.encode(dto.getPassword())
+                passwordEncoder.encode(dto.getPassword()),
+                false
         );
     }
 }

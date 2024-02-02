@@ -33,10 +33,7 @@ public class AdminPageController {
         List<UserDto> usersInformation = userService.findUsersInformation(USER_ROLE);
         List<UserDto> blockedUsersInformation = userService.findUsersInformation(BLOCKED_USER_ROLE);
         List<ReportAdminDto> reports = postService.getAllReports();
-        String blockMessage =(String) model.asMap().get("block message");
-        String unBlockMessage =(String) model.asMap().get("unblock message");
-        model.addAttribute("blockMessage", blockMessage);
-        model.addAttribute("unBlockMessage", unBlockMessage);
+//        String blockMessage =(String) model.asMap().get("message");
         model.addAttribute("users", usersInformation);
         model.addAttribute("blockedUsers", blockedUsersInformation);
         model.addAttribute("reports", reports);
@@ -59,19 +56,26 @@ public class AdminPageController {
     String blockUser(@RequestParam Long userId, RedirectAttributes redirectAttributes){
         userService.blockUser(userId);
         String username = userService.getUserUsername(userId);
-        redirectAttributes.addFlashAttribute("blockMessage", username + " is blocked");
+        redirectAttributes.addFlashAttribute("message", username + " is blocked");
         return "redirect:/admin";
     }
 
     @GetMapping("/unblock-user")
     String unblockUser(@RequestParam String username, RedirectAttributes redirectAttributes){
         userService.unblockUser(username);
-        redirectAttributes.addFlashAttribute("unblockMessage", username + " is unblocked");
+        redirectAttributes.addFlashAttribute("message", username + " is unblocked");
         return "redirect:/admin";
     }
     @GetMapping("/delete-report")
     String deleteReport(@RequestParam Long reportId){
         reportService.deleteReport(reportId);
+        return "redirect:/admin";
+    }
+
+    @GetMapping("/enable-post-verification")
+    String enablePostVerification(@RequestParam String username, RedirectAttributes redirectAttributes){
+        userService.enablePostVerification(username);
+        redirectAttributes.addFlashAttribute("message", "post verification enabled for: " + username);
         return "redirect:/admin";
     }
 }

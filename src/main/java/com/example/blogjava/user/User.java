@@ -27,6 +27,9 @@ public class User {
     @NotNull
     @Size(min = 4, max = 200)
     private String password;
+
+    @NotNull
+    private boolean postVerification;
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name = "user_roles",
@@ -52,10 +55,11 @@ public class User {
     private Set<Coin> coins = new HashSet<>();
 
 
-    public User(String username, String email, String password) {
+    public User(String username, String email, String password, boolean postVerification) {
         this.username = username;
         this.email = email;
         this.password = password;
+        this.postVerification = postVerification;
     }
 
     public Set<Coin> getCoins() {
@@ -103,6 +107,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public boolean isPostVerification() {
+        return postVerification;
+    }
+
+    public void setPostVerification(boolean postVerification) {
+        this.postVerification = postVerification;
     }
 
     public Set<UserRole> getUserRoles() {

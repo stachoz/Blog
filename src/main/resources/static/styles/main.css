@@ -122,12 +122,16 @@ em {
     display: flex;
     justify-content: space-between;
 }
+/*------Admin page-----*/
 
 .admin-content {
     display: flex;
     justify-content: space-around;
 }
-
+.message-box{
+    display: flex;
+    justify-content: center;
+}
 .table-container {
     padding: 10px;
 }
