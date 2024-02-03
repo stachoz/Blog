@@ -12,8 +12,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/post")
@@ -31,11 +33,12 @@ public class PostController {
          return "post/add-post-form";
     }
     @PostMapping("/save")
-    String savePost(@Valid @ModelAttribute("post") PostFormDto postFormDto, BindingResult bindingResult){
+    String savePost(@Valid @ModelAttribute("post") PostFormDto postFormDto, BindingResult bindingResult, RedirectAttributes redirectAttributes){
         if (bindingResult.hasErrors()){
             return "post/add-post-form";
         }
-        postService.savePost(postFormDto);
+        Optional<String> message = postService.savePost(postFormDto);
+        message.ifPresent(m -> redirectAttributes.addFlashAttribute("addPostFeedback", m));
         return "redirect:/";
     }
 

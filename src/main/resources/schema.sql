@@ -13,6 +13,7 @@ CREATE TABLE application_user
     username VARCHAR(50) NOT NULL unique ,
     email VARCHAR(80) NOT NULL unique ,
     password VARCHAR(200) NOT NULL,
+    post_verification BOOL NOT NULL,
     UNIQUE (username, email)
 );
 

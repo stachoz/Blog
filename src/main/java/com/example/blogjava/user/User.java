@@ -29,7 +29,7 @@ public class User {
     private String password;
 
     @NotNull
-    private boolean postVerification;
+    private boolean postVerification = false;
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name = "user_roles",
@@ -109,13 +109,14 @@ public class User {
         this.password = password;
     }
 
-    public boolean isPostVerification() {
+    public boolean getPostVerification() {
         return postVerification;
     }
 
     public void setPostVerification(boolean postVerification) {
         this.postVerification = postVerification;
     }
+
 
     public Set<UserRole> getUserRoles() {
         return userRoles;

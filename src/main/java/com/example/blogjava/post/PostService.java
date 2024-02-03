@@ -42,12 +42,12 @@ public class PostService {
 
     @Transactional
     public Page<PostDto> getPageOfPosts(PageRequest pr){
-        Page<Post> all = postRepository.findAllByOrderByIdDesc(pr);
+        Page<Post> all = postRepository.findAllByUser_PostVerificationOrderByIdDesc(false,pr);
         return all.map(PostDtoMapper::map);
     }
 
     @Transactional
-    public void savePost(PostFormDto postFormDto){
+    public Optional<String> savePost(PostFormDto postFormDto){
         if (!hasCurrentUserAuthority(BLOCKED_USER_AUTHORITY)){
             Post post = PostFormDtoMapper.map(postFormDto);
             String name = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -55,6 +55,8 @@ public class PostService {
             post.setUser(user);
             postRepository.save(post);
         }
+        if (getCurrentUser().getPostVerification()) return Optional.of("you have to wait for post verification");
+        return Optional.empty();
     }
 
     @Transactional

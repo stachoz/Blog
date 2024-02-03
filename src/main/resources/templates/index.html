@@ -44,6 +44,9 @@
             <div class="grid-item">
                 <section>
                     <h3 class="message" sec:authorize="hasRole('ROLE_BLOCKED_USER')">You are blocked. Your account is restricted</h3>
+                    <div th:if="${addPostFeedback}">
+                        <h4 th:text="${addPostFeedback}" class="message">You have to wait for post verification</h4>
+                    </div>
                     <h4 sec:authorize="!hasRole('ROLE_BLOCKED_USER')">
                         <a sec:authorize="isAuthenticated()" th:href="@{/post/add}">Add post</a>
                     </h4>
