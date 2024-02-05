@@ -5,6 +5,7 @@ import com.example.blogjava.post.report.Report;
 import com.example.blogjava.user.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -22,6 +23,8 @@ public class Post {
     @Size(max = 2000)
     @NotEmpty
     private String content;
+    @NotNull
+    private boolean isVerified;
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     private Date timeAdded;
@@ -94,5 +97,13 @@ public class Post {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public boolean isVerified() {
+        return isVerified;
+    }
+
+    public void setVerified(boolean verified) {
+        isVerified = verified;
     }
 }

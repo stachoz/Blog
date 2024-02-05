@@ -53,6 +53,8 @@ public class PostService {
             String name = SecurityContextHolder.getContext().getAuthentication().getName();
             User user = userRepository.findByUsername(name).orElseThrow(UserNotFoundException::new);
             post.setUser(user);
+            if(post.getUser().getPostVerification()) post.setVerified(false);
+            else post.setVerified(true);
             postRepository.save(post);
         }
         if (getCurrentUser().getPostVerification()) return Optional.of("you have to wait for post verification");
