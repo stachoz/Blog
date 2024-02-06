@@ -117,6 +117,15 @@ public class UserService {
         return userRepository.countUserPosts(currentUsername);
     }
 
+    public void enablePostVerification(String username){
+        if(isCurrentUserAdmin()){
+            User user = userRepository.findByUsername(username).orElseThrow(NoSuchElementException::new);
+            user.setPostVerification(true);
+            userRepository.save(user);
+        }
+    }
+
+
     public String getCurrentUser(){
         return SecurityContextHolder.getContext().getAuthentication().getName();
     }

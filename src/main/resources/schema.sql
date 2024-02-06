@@ -13,6 +13,7 @@ CREATE TABLE application_user
     username VARCHAR(50) NOT NULL unique ,
     email VARCHAR(80) NOT NULL unique ,
     password VARCHAR(200) NOT NULL,
+    post_verification BOOL NOT NULL,
     UNIQUE (username, email)
 );
 
@@ -52,7 +53,6 @@ CREATE TABLE report
     cause VARCHAR(300),
     post_id BIGINT NOT NULL,
     FOREIGN KEY (post_id) REFERENCES post(id)
-
 );
 
 CREATE TABLE user_coins

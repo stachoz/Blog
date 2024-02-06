@@ -1,6 +1,5 @@
 package com.example.blogjava.post.dto;
 
-import com.example.blogjava.user.User;
 
 import java.util.Date;
 

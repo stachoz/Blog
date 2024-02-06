@@ -28,6 +28,8 @@ public class CoinApiService {
             String jsonString = response.body();
             HashMap<String, String> result = objectMapper.readValue(jsonString, new TypeReference<>() {
             });
+            System.out.println("--------");
+            System.out.println(result);
             return Optional.of(result);
         }
         catch (ConnectException e){

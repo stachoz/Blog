@@ -11,10 +11,6 @@ table, th, td{
     border: 1px solid;
 }
 
-em {
-    
-}
-
 .myNavbar {
     display: flex;
     justify-content: start;
@@ -76,6 +72,10 @@ em {
     margin: auto;
 }
 
+.post-content p {
+    margin-bottom: 0;
+}
+
 .icon {
     font-size: 1.2em;
     margin: 2px;
@@ -89,7 +89,6 @@ em {
 .fa-thumbs-down:hover{
     color: #dc3545;
 }
-
 
 /*---------Post-------------*/
 
@@ -122,18 +121,31 @@ em {
     display: flex;
     justify-content: space-between;
 }
+/*------Admin page-----*/
 
 .admin-content {
     display: flex;
     justify-content: space-around;
 }
-
+.message-box{
+    display: flex;
+    justify-content: center;
+}
 .table-container {
     padding: 10px;
 }
 
 .message{
     color: red;
+}
+
+.verification-button {
+     margin: 20px;
+}
+
+.verification-button a {
+    text-decoration: none;
+    color: #ffff
 }
 
 .comments p {

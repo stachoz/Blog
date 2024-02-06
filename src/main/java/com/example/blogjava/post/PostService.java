@@ -42,19 +42,23 @@ public class PostService {
 
     @Transactional
     public Page<PostDto> getPageOfPosts(PageRequest pr){
-        Page<Post> all = postRepository.findAllByOrderByIdDesc(pr);
+        Page<Post> all = postRepository.findAllByUser_PostVerificationOrderByIdDesc(false,pr);
         return all.map(PostDtoMapper::map);
     }
 
     @Transactional
-    public void savePost(PostFormDto postFormDto){
+    public Optional<String> savePost(PostFormDto postFormDto){
         if (!hasCurrentUserAuthority(BLOCKED_USER_AUTHORITY)){
             Post post = PostFormDtoMapper.map(postFormDto);
             String name = SecurityContextHolder.getContext().getAuthentication().getName();
             User user = userRepository.findByUsername(name).orElseThrow(UserNotFoundException::new);
             post.setUser(user);
+            if(post.getUser().getPostVerification()) post.setVerified(false);
+            else post.setVerified(true);
             postRepository.save(post);
         }
+        if (getCurrentUser().getPostVerification()) return Optional.of("you have to wait for post verification");
+        return Optional.empty();
     }
 
     @Transactional
@@ -119,6 +123,22 @@ public class PostService {
                 report -> reports.add(ReportAdminDtoMapper.map(report))
         );
         return reports;
+    }
+
+    public List<PostDto> getPostsToVerification(){
+        return postRepository.findAllByVerification(false)
+                .stream().map(PostDtoMapper::map)
+                .collect(Collectors.toList());
+    }
+
+    public void updateVerificationStatus(Long postId, boolean verificationStatus){
+        if(!verificationStatus){
+            postRepository.deleteById(postId);
+        } else {
+            Post post = postRepository.findById(postId).orElseThrow(NoSuchElementException::new);
+            post.setVerified(true);
+            postRepository.save(post);
+        }
     }
 
     private boolean hasCurrentUserAuthority(String authority){

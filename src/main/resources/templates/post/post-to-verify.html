@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: head">
+	<meta charset="UTF-8">
+	<title>Verify</title>
+</head>
+<body>
+	<header th:replace="fragments :: header"></header>
+	<div class="content">
+		<div class="post-info">
+			<a th:href="@{/profile(username=${post.author})}">
+				<p th:text="${post.author}">Username</p>
+			</a>
+			<p th:text="${#dates.format(post.timeAdded, 'dd-MM-yyyy HH:mm')}"></p>
+		</div>
+		<p th:text="${post.title}">Title</p>
+		<div class="post-content" th:utext="${post.content}">content</div>
+		<button type="button" class="btn btn-success verification-button">
+			<a th:href="@{toVerify/verified(id=${post.id},status=true)}">
+				Accept
+			</a>
+		</button>
+		<button type="button" class="btn btn-danger verification-button">
+			<a th:href="@{toVerify/verified(id=${post.id},status=false)}">
+				Delete
+			</a>
+		</button>
+	</div>
+</body>
+</html>

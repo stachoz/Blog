@@ -23,7 +23,7 @@ public class SupportedByCoinApiValidator implements ConstraintValidator<Supporte
 
     @Override
     public boolean isValid(String coinName, ConstraintValidatorContext constraintValidatorContext) {
-        return coinRepository.existsByName(coinName) || !apiService.getCoinJSON(coinName)
+        return coinRepository.existsByName(coinName) || apiService.getCoinJSON(coinName)
                 .filter(json -> json.containsKey("error"))
                 .isEmpty();
     }
