@@ -20,5 +20,5 @@ mvn spring-boot:run
 | add coins                     | -              | +    | -            | +     |
 | view base coin prices         | +              | +    | +            | +     |
 | create, report, comment posts | -              | +    | -            | +     |
-| delete, verify, post          | -              | -    | -            | +     |
+| delete, verify post           | -              | -    | -            | +     |
 | delete, block, unblock users  | -              | -    | -            | +     |
