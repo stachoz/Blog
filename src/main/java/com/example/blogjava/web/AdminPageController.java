@@ -20,7 +20,6 @@ public class AdminPageController {
     private final UserService userService;
     private final PostService postService;
     private final ReportService reportService;
-    private final String USER_ROLE = "USER";
     private final String BLOCKED_USER_ROLE = "BLOCKED_USER";
 
     public AdminPageController(UserService userService, PostService postService, ReportService reportService){
@@ -30,13 +29,11 @@ public class AdminPageController {
     }
     @GetMapping("")
     String admin(Model model){
-        List<UserDto> usersInformation = userService.findUsersInformation(USER_ROLE);
         List<UserDto> blockedUsersInformation = userService.findUsersInformation(BLOCKED_USER_ROLE);
         List<ReportAdminDto> reports = postService.getAllReports();
-//        String blockMessage =(String) model.asMap().get("message");
-        model.addAttribute("users", usersInformation);
         model.addAttribute("blockedUsers", blockedUsersInformation);
         model.addAttribute("reports", reports);
+        model.addAttribute("postsToVerification", postService.getPostsToVerification());
         return "admin";
     }
 
@@ -76,6 +73,18 @@ public class AdminPageController {
     String enablePostVerification(@RequestParam String username, RedirectAttributes redirectAttributes){
         userService.enablePostVerification(username);
         redirectAttributes.addFlashAttribute("message", "post verification enabled for: " + username);
+        return "redirect:/admin";
+    }
+
+    @GetMapping("/toVerify")
+    String getPostToVerify(@RequestParam Long id, Model model){
+        model.addAttribute("post", postService.getPostById(id));
+        return "post/post-to-verify";
+    }
+
+    @GetMapping("/toVerify/verified")
+    String verifyPost(@RequestParam Long id, @RequestParam boolean status){
+        postService.updateVerificationStatus(id, status);
         return "redirect:/admin";
     }
 }

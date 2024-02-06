@@ -11,10 +11,6 @@ table, th, td{
     border: 1px solid;
 }
 
-em {
-    
-}
-
 .myNavbar {
     display: flex;
     justify-content: start;
@@ -141,6 +137,15 @@ em {
 
 .message{
     color: red;
+}
+
+.verification-button {
+     margin: 20px;
+}
+
+.verification-button a {
+    text-decoration: none;
+    color: #ffff
 }
 
 .comments p {

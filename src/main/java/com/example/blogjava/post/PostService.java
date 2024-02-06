@@ -125,6 +125,22 @@ public class PostService {
         return reports;
     }
 
+    public List<PostDto> getPostsToVerification(){
+        return postRepository.findAllByVerification(false)
+                .stream().map(PostDtoMapper::map)
+                .collect(Collectors.toList());
+    }
+
+    public void updateVerificationStatus(Long postId, boolean verificationStatus){
+        if(!verificationStatus){
+            postRepository.deleteById(postId);
+        } else {
+            Post post = postRepository.findById(postId).orElseThrow(NoSuchElementException::new);
+            post.setVerified(true);
+            postRepository.save(post);
+        }
+    }
+
     private boolean hasCurrentUserAuthority(String authority){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return authentication.getAuthorities().stream()
