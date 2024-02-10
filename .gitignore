@@ -5,6 +5,9 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
+### Spring config file ###
+application.yml
+
 ### STS ###
 .apt_generated
 .classpath
