@@ -72,7 +72,7 @@
                                     action
                                 </button>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" th:href="@{admin/delte-post(postId = *{postId})}">Delete post</a></li>I
+                                    <li><a class="dropdown-item" th:href="@{admin/delete-post(postId = *{postId})}">Delete post</a></li>
                                     <li><a class="dropdown-item" th:href="@{admin/block-user(userId = *{postAuthorId})}">Block user</a></li>
                                     <li><a class="dropdown-item" th:href="@{admin/delete-report(reportId = *{id})}">Delete report</a></li>
                                     <li><a class="dropdown-item" th:href="@{admin/enable-post-verification(username = *{authorUsername})}">Enable post verification</a></li>
