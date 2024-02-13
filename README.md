@@ -22,3 +22,14 @@ mvn spring-boot:run
 | create, report, comment posts | -              | +    | -            | +     |
 | delete, verify post           | -              | -    | -            | +     |
 | delete, block, unblock users  | -              | -    | -            | +     |
+
+
+## Usage
+
+The home page features a central section displaying the latest added posts, providing users with up-to-date information. 
+Additionally, on the side panel, there is valuable data about various cryptocurrencies. The "Your COINS" section allows users to track specific coins they've added, with a user-friendly form that includes validations. 
+Users have the option to add any currency supported by an external API. 
+
+
+!["home page"](./images/homePage.png)
+
