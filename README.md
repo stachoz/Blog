@@ -13,16 +13,23 @@ mvn spring-boot:run
 
 ## Functionalities
 
-### Admin
-- Delete posts
-- Delete, block, unblock users
-- Manage posts' reports
-- Display base coins prices
+|                               | anonymous user | user | blocked user | admin |
+|-------------------------------|----------------|------|--------------|-------|
+| read posts                    | +              | +    | +            | +     |
+| view profiles                 | +              | +    | +            | +     |
+| add coins                     | -              | +    | -            | +     |
+| view base coin prices         | +              | +    | +            | +     |
+| create, report, comment posts | -              | +    | -            | +     |
+| delete, verify post           | -              | -    | -            | +     |
+| delete, block, unblock users  | -              | -    | -            | +     |
 
-### Logged in user
-- create, report, comment posts
-- add own coins
 
-### Anonymous users
-- read posts
-- view profiles
+## Usage
+
+The home page features a central section displaying the latest added posts, providing users with up-to-date information. 
+Additionally, on the side panel, there is valuable data about various cryptocurrencies. The "Your COINS" section allows users to track specific coins they've added, with a user-friendly form that includes validations. 
+Users have the option to add any currency supported by an external API. 
+
+
+!["home page"](./images/homePage.png)
+
