@@ -51,7 +51,7 @@ Admin can:
 Registration from contains full validation. After successful registration, the system sends a welcome e-mail
 
 
-## Next steps of development
+## Next steps of development: check here -> [cryptoApp]("https://github.com/stachoz/CryptoApp-backend")
 1. Divide into backend and frontend
    - Implement RESTful API
    - Develop a responsive frontend using Angular
